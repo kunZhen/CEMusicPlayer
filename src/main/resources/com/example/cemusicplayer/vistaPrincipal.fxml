@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.HelloController" />
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.HelloController">
+   <children>
+      <AnchorPane id="AnchorPane1Principal" prefHeight="60.0" prefWidth="400.0">
+         <children>
+            <MenuBar id="MenuBarra" layoutY="2.0" prefHeight="25.0" prefWidth="400.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Usuarios">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Información" />
+                      <MenuItem mnemonicParsing="false" text="Salir" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Bilbiotecas">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Biblioteca1" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
