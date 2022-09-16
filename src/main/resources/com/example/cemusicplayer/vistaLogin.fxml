@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaLoginControlador">
    <children>
       <Label id="Label_InSe" alignment="CENTER" layoutX="63.0" layoutY="252.0" prefHeight="95.0" prefWidth="273.0" text="Iniciar sesión" textAlignment="CENTER" textFill="#2b042c">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <TextField id="TextoUsuario" layoutX="200.0" layoutY="375.0" prefHeight="26.0" prefWidth="151.0" />
+      <TextField id="TextoUsuario" fx:id="TextoUsuario" layoutX="200.0" layoutY="375.0" onKeyTyped="#eventKey" prefHeight="26.0" prefWidth="151.0" />
       <Label layoutX="75.0" layoutY="444.0" text="Contraseña" textFill="#2b042c">
          <font>
             <Font size="20.0" />
@@ -38,12 +38,12 @@
             <Image url="@LlaveCandadoIcon.png" />
          </image>
       </ImageView>
-      <Button id="BotonIngresar" layoutX="155.0" layoutY="515.0" mnemonicParsing="false" text="Ingresar">
+      <Button id="BotonIngresar" fx:id="BotonIngresar" layoutX="155.0" layoutY="515.0" mnemonicParsing="false" onAction="#eventAction" text="Ingresar">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <PasswordField id="TextoContrasena" layoutX="200.0" layoutY="447.0" />
+      <PasswordField id="TextoContrasena" fx:id="TextoContrasena" layoutX="200.0" layoutY="447.0" onKeyTyped="#eventKey" />
    </children>
    <opaqueInsets>
       <Insets />

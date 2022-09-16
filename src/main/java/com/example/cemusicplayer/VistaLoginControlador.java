@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -19,11 +18,15 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+import com.google.gson.Gson;
+public class VistaLoginControlador implements Initializable {
     @FXML
     private TextField TextoUsuario; //Objetos con el mismo ID que en scene builder
 
@@ -36,11 +39,24 @@ public class HelloController implements Initializable {
     @FXML
     private void eventKey(KeyEvent event) {
         Object evt = event.getSource(); // en que nodo se posicionó el evento
-        System.out.println("eventkey");
+
+        if (evt.equals(TextoUsuario)) {
+            if (event.getCharacter().equals(" ")) { // No permite colocar espacios
+                TextoUsuario.clear();
+            }
+        } else if (evt.equals(TextoContrasena)) {
+            if (event.getCharacter().equals(" ")) {
+                TextoContrasena.clear();
+            }
+        }
+
+        System.out.println("eventkey"); //cada vez que se teclea muestra este print
     }
     @FXML
     private void eventAction(ActionEvent event){
         Object evt = event.getSource();
+
+        cargarArchivo();
 
         if (evt.equals(BotonIngresar)){
             System.out.println("Boton ingresar");
@@ -58,6 +74,27 @@ public class HelloController implements Initializable {
     }
 
 
+    public void cargarArchivo(){
+        Gson gson = new Gson();
+        String fichero = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader("com/example/cemusicplayer/infoUsuarios.json"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                fichero += linea;
+            }
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        Usuario usuario = gson.fromJson(fichero, Usuario.class);
+
+        System.out.println(usuario);
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
