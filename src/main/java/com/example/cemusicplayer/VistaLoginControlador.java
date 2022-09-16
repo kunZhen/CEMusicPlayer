@@ -78,21 +78,25 @@ public class VistaLoginControlador implements Initializable {
         Gson gson = new Gson();
         String fichero = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader("com/example/cemusicplayer/infoUsuarios.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Usuario\\Documents\\II Semestre\\PruebaCEMusicPlayer\\CEMusicPlayer\\src\\main\\resources\\com\\example\\cemusicplayer\\infoUsuariosPrueba.csv"))) {
             String linea;
-            while ((linea = br.readLine()) != null) {
-                fichero += linea;
-            }
+            br.readLine();
+            while ((fichero = br.readLine()) != null) {
 
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+                String[] row = fichero.split(";");
+
+                Usuario usuario = new Usuario(row[0], row[1], row[2], row[3]);
+                System.out.println(usuario);
+
+
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        Usuario usuario = gson.fromJson(fichero, Usuario.class);
-
-        System.out.println(usuario);
 
     }
     @Override
