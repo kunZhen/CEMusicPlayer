@@ -2,35 +2,25 @@ package com.example.cemusicplayer;
 
 public class Usuario {
 
-    private String nomApellido;
-    private String correo;
+    private Usuario next;
+    private String email;
+    private String password;
+    private String nombre;
     private String provincia;
-    private String contrasena;
 
-    public Usuario() {
-    }
-
-    public Usuario(String nomApellido, String correo, String provincia, String contrasena) {
-        this.nomApellido = nomApellido;
-        this.correo = correo;
+    public Usuario (String email, String password, String nombre, String provincia){ //Los parametros que yo necesito para la verificacion
+        this.next = null;
+        this.email = email;
+        this.password = password;
+        this.nombre = nombre;
         this.provincia = provincia;
-        this.contrasena = contrasena;
+    }
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getNomApellido() {
-        return nomApellido;
-    }
-
-    public void setNomApellido(String nomApellido) {
-        this.nomApellido = nomApellido;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getProvincia() {
@@ -41,21 +31,28 @@ public class Usuario {
         this.provincia = provincia;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getEmail() {
+        return email;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "nomApellido='" + nomApellido + '\'' +
-                ", correo='" + correo + '\'' +
-                ", provincia='" + provincia + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Usuario getNext() {
+        return next;
+    }
+
+    public void setNext(Usuario usuario) {
+        this.next = usuario;
+    }
+
 }

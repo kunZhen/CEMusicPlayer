@@ -59,17 +59,11 @@ public class VistaLoginControlador implements Initializable {
     private void eventAction(ActionEvent event){
         Object evt = event.getSource();
 
-        //cargarArchivo();
-        leerLineaCSV();
-
         if (evt.equals(BotonIngresar)){
-            System.out.println("Boton ingresar");
-            if (!TextoUsuario.getText().isEmpty() && !TextoContrasena.getText().isEmpty()){
+            if (!TextoUsuario.getText().isEmpty() && !TextoContrasena.getText().isEmpty()){ //Obtener los datos de ingreso
                 String user = TextoUsuario.getText();
                 String pass = TextoContrasena.getText();
-
-                System.out.println("HOla");
-                CargarEscena("vistaPrincipal.fxml", event); //Crear nueva ventana
+                cargarArchivo(user,pass,event);
 
             }else {
                 labelError.setText("Error: No puede dejar el espacio en blanco.");
@@ -77,60 +71,40 @@ public class VistaLoginControlador implements Initializable {
         }
     }
 
-    /*
-    public String cargarArchivo(){
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+
+    public String cargarArchivo(String user, String pass, ActionEvent event){ //objetos de usuario, verificacion de usuario
 
         String fichero = "";
         System.out.println("entra a cargar archivo");
         String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuariosPrueba.csv";
+        UserLinkedList listausuario = new UserLinkedList();
 
         try  {
             System.out.println("entra al try");
             BufferedReader br = new BufferedReader(new FileReader(ruta));
-            String linea;
+            String linea = br.readLine();
 
-            while ((linea = br.readLine()) != null) {
-                fichero += (linea+"/");
+            while (linea != null) { //objetos de usuario
+                String[] row = linea.split(";");
+                listausuario.insertFirst(row[0], row[1], row[2], row[3]);
+                linea = br.readLine();
 
-                 String[] row = fichero.split(";");
+            }br.close();
 
-                Usuario usuario = new Usuario(row[0], row[1], row[2], row[3]);
-                System.out.println("usuario");
-
-
+            if (listausuario.find(user,pass) == null) { //verifica usuario
+                labelError.setText("Error: No se pudo ingresar con esos datos.");
+            }else{
+                CargarEscena("vistaPrincipal.fxml", event); //Crear nueva ventana
             }
-            //br.close();
-
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo");
         }
-
-
         return fichero;
-    } */
-
-    public String leerLineaCSV(){
-        String linea = "";
-        String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuariosPrueba.csv";
-        System.out.println("entra a leer linea");
-        try {
-            BufferedReader bf = new BufferedReader(new FileReader(ruta));
-            String bfRead;
-            if ((bfRead = bf.readLine()) != null){
-                linea = bfRead;
-                String[] row = linea.split(";");
-
-                Usuario usuario = new Usuario(row[0], row[1], row[2], row[3]);
-                System.out.println(usuario);
-            }
-        } catch (Exception e){
-                System.err.println("Error leyeno archivo csv");
-            } return linea;
-        }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void CargarEscena(String url, Event event){
@@ -158,11 +132,5 @@ public class VistaLoginControlador implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
-
-
-
 }

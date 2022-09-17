@@ -15,6 +15,14 @@ public class HelloApplication extends Application {
         stage.setTitle("CE Music Player!");
         stage.setScene(scene);
         stage.show();
+        /*
+        UserLinkedList listausuario = new UserLinkedList();
+
+        listausuario.insertFirst("monicaegm", "egm");
+        listausuario.insertFirst("mongranados", "stfn");
+        listausuario.insertFirst("granadosmon", "forza");*/
+
+
     }
 
     public static void main(String[] args) {
