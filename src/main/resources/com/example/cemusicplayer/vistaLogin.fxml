@@ -44,6 +44,7 @@
          </font>
       </Button>
       <PasswordField id="TextoContrasena" fx:id="TextoContrasena" layoutX="200.0" layoutY="447.0" onKeyTyped="#eventKey" />
+      <Label fx:id="labelError" layoutX="56.0" layoutY="339.0" textFill="RED" />
    </children>
    <opaqueInsets>
       <Insets />
