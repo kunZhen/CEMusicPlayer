@@ -13,6 +13,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vistaLogin.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("CE Music Player!");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
         /*

@@ -8,10 +8,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaLoginControlador">
    <children>
+      <Pane layoutY="591.0" prefHeight="20.0" prefWidth="400.0" style="-fx-background-color: #2b042c;" />
       <Label id="Label_InSe" alignment="CENTER" layoutX="63.0" layoutY="252.0" prefHeight="95.0" prefWidth="273.0" text="Iniciar sesión" textAlignment="CENTER" textFill="#2b042c">
          <font>
             <Font size="40.0" />
