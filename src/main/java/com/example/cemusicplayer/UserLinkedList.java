@@ -49,7 +49,7 @@ public class UserLinkedList {
         return null;
     }
 
-    public void print (){
+    public void print(){
         Usuario current = this.head;
         while (current != null){
             System.out.println(current.getEmail());

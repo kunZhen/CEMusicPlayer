@@ -84,9 +84,10 @@ public class VistaLoginControlador implements Initializable {
         String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuariosPrueba.csv";
         UserLinkedList listausuario = new UserLinkedList();
 
-        try  {
+        try {
             System.out.println("entra al try");
             BufferedReader br = new BufferedReader(new FileReader(ruta));
+            br.readLine(); //saltar la primera linea - los encabezados
             String linea = br.readLine();
 
             while (linea != null) { //objetos de usuario
@@ -94,7 +95,9 @@ public class VistaLoginControlador implements Initializable {
                 listausuario.insertFirst(row[0], row[1], row[2], row[3]);
                 linea = br.readLine();
 
-            }br.close();
+            } br.close();
+
+            listausuario.print();
 
             if (listausuario.find(user,pass) == null) { //verifica usuario
                 labelError.setText("Error: No se pudo ingresar con esos datos.");
