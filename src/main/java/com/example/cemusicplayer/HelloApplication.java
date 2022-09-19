@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         Image icon = new Image(getClass().getResourceAsStream("Icons/musicPlayerIcon.png"));
         stage.getIcons().add(icon);
-        stage.setScene(scene);
+        stage.setScene(scene); //Esto es una prueba de la rama
         stage.show();
 
     }
