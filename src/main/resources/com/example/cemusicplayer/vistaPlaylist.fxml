@@ -12,64 +12,84 @@
 
 <AnchorPane prefHeight="601.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaPlaylistControlador">
    <children>
-      <Button layoutX="174.0" layoutY="516.0" mnemonicParsing="false">
+      <Button fx:id="playButton" layoutX="174.0" layoutY="516.0" mnemonicParsing="false">
          <graphic>
-            <ImageView fx:id="BotonPlay" fitHeight="90.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playImage" fitHeight="90.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icons/playIMG.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="BotonNext" layoutX="256.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="58.0">
+      <Button fx:id="nextButton" layoutX="256.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="58.0">
          <graphic>
-            <ImageView fitHeight="57.0" fitWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="nextImage" fitHeight="57.0" fitWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icons/arrowIMG.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="BotonBack" layoutX="94.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="42.0">
+      <Button fx:id="previousButton" layoutX="94.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="42.0">
          <graphic>
-            <ImageView fitHeight="50.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="previousButton" fitHeight="50.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icons/arrowIMG.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="14.0" layoutY="516.0" mnemonicParsing="false">
+      <Button fx:id="cycleButton" layoutX="14.0" layoutY="516.0" mnemonicParsing="false">
          <graphic>
-            <ImageView fx:id="BotonCiclo" fitHeight="53.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cycleImage" fitHeight="53.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icons/cicloIMg.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Slider fx:id="SliderVolum" layoutX="27.0" layoutY="57.0" prefHeight="14.0" prefWidth="362.0" />
-      <ProgressBar layoutY="478.0" prefHeight="18.0" prefWidth="413.0" progress="0.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="Biblioteca">
+      <Slider fx:id="volumSlider" layoutX="27.0" layoutY="57.0" prefHeight="14.0" prefWidth="362.0" />
+      <ProgressBar fx:id="progressBar" layoutY="478.0" prefHeight="18.0" prefWidth="413.0" progress="0.0" />
+      <Label fx:id="bibliotecaLabel" layoutX="14.0" layoutY="14.0" text="Biblioteca">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView layoutX="27.0" layoutY="101.0" prefHeight="275.0" prefWidth="362.0" />
-      <Button layoutX="333.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="66.0">
+      <ListView fx:id="songsListView" layoutX="27.0" layoutY="101.0" prefHeight="275.0" prefWidth="362.0" />
+      <Button fx:id="favoriteButton" layoutX="333.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="66.0">
          <graphic>
-            <ImageView fitHeight="40.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="favoriteImage" fitHeight="40.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icons/corazonIMG.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="26.0" layoutY="390.0" text="Cancion">
+      <Label fx:id="labelSong" layoutX="26.0" layoutY="390.0" text="Cancion">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="26.0" layoutY="417.0" text="Artista" />
+      <Label fx:id="labelArtist" layoutX="26.0" layoutY="417.0" text="Artista" />
+      <Button fx:id="editButton" layoutX="310.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Editar" />
+      <Button fx:id="playSelectedButton" layoutX="310.0" layoutY="426.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Reproducir" />
+      <Button fx:id="uploadButton" layoutX="181.0" layoutY="403.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="54.0">
+         <graphic>
+            <ImageView fx:id="uploadImage" fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/uparrowIMG.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="garbageButton" layoutX="242.0" layoutY="403.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="54.0">
+         <graphic>
+            <ImageView fx:id="garbageImage" fitHeight="38.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/traschcanIMG.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
