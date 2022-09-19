@@ -3,6 +3,7 @@ package com.example.cemusicplayer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,15 +15,10 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("CE Music Player!");
         stage.setResizable(false);
+        Image icon = new Image(getClass().getResourceAsStream("Icons/musicPlayerIcon.png"));
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
-        /*
-        UserLinkedList listausuario = new UserLinkedList();
-
-        listausuario.insertFirst("monicaegm", "egm");
-        listausuario.insertFirst("mongranados", "stfn");
-        listausuario.insertFirst("granadosmon", "forza");*/
-
 
     }
 

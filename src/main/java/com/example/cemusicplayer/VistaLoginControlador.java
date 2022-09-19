@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +37,10 @@ public class VistaLoginControlador implements Initializable {
 
     @FXML
     private Button BotonIngresar;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
     private void eventKey(KeyEvent event) {
@@ -102,7 +107,7 @@ public class VistaLoginControlador implements Initializable {
             if (listausuario.find(user,pass) == null) { //verifica usuario
                 labelError.setText("Error: No se pudo ingresar con esos datos.");
             }else{
-                CargarEscena("vistaPrincipal.fxml", event); //Crear nueva ventana
+                CargarEscena("vistaBiblioteca.fxml", event); //Crear nueva ventana
             }
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo");
@@ -112,16 +117,9 @@ public class VistaLoginControlador implements Initializable {
 
     public void CargarEscena(String url, Event event){
         try {
-            Object eventSource = event.getSource();
-            Node sourceAsNode = (Node) eventSource ;
-            Scene oldScene = sourceAsNode.getScene();
-            Window window = oldScene.getWindow();
-            Stage stage = (Stage) window ;
-            stage.hide();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vistaPrincipal.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("CE Music Player!");
+            root = FXMLLoader.load(getClass().getResource(url));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
