@@ -9,18 +9,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="401.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaBibliotecaControlador">
    <children>
-      <TableView layoutX="14.0" layoutY="86.0" prefHeight="374.0" prefWidth="374.0">
+      <TableView fx:id="bibliotecaTableView" layoutX="14.0" layoutY="86.0" prefHeight="374.0" prefWidth="374.0">
         <columns>
-          <TableColumn prefWidth="143.0" text="Nombre" />
-          <TableColumn minWidth="0.0" prefWidth="90.0" text="Cantidad" />
-            <TableColumn minWidth="4.0" prefWidth="140.0" text="Fecha de creación" />
+          <TableColumn fx:id="nombreColumn" prefWidth="143.0" text="Nombre" />
+          <TableColumn fx:id="cantidadColumn" minWidth="0.0" prefWidth="90.0" text="Cantidad" />
+            <TableColumn fx:id="fechaColumn" minWidth="4.0" prefWidth="140.0" text="Fecha de creación" />
         </columns>
       </TableView>
-      <Button layoutX="108.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Abrir" />
-      <Button layoutX="229.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Eliminar" />
-      <TextField layoutX="15.0" layoutY="533.0" prefHeight="25.0" prefWidth="264.0" />
-      <Button layoutX="308.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Añadir" />
-      <Text layoutX="15.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar:" />
-      <TextField layoutX="14.0" layoutY="49.0" />
+      <Button fx:id="openButton" layoutX="108.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Abrir" />
+      <Button fx:id="deleteButton" layoutX="229.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Eliminar" />
+      <TextField fx:id="addBibliotecaTextField" layoutX="15.0" layoutY="533.0" prefHeight="25.0" prefWidth="264.0" />
+      <Button fx:id="addButton" layoutX="308.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Añadir" />
+      <Text fx:id="searchText" layoutX="15.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar:" />
+      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="49.0" />
    </children>
 </AnchorPane>
