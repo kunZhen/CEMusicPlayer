@@ -52,9 +52,10 @@ public class UserLinkedList {
     public void print(){
         Usuario current = this.head;
         while (current != null){
-            System.out.println(current.getEmail());
-            System.out.println(current.getPassword());
-            System.out.println("OTRO");
+            System.out.println("Usuario: ");
+            System.out.println("Correo: " + current.getEmail());
+            System.out.println("Contrasena: " + current.getPassword());
+            System.out.println(" ");
             current = current.getNext();
         }
     }
