@@ -15,6 +15,7 @@ public class Usuario {
         this.nombre = nombre;
         this.provincia = provincia;
     }
+
     public String getNombre() {
         return nombre;
     }

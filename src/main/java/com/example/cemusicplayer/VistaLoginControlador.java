@@ -31,10 +31,8 @@ public class VistaLoginControlador implements Initializable {
     public Label labelError;
     @FXML
     private TextField TextoUsuario; //Objetos con el mismo ID que en scene builder
-
     @FXML
     private PasswordField TextoContrasena;
-
     @FXML
     private Button BotonIngresar;
 
@@ -102,7 +100,6 @@ public class VistaLoginControlador implements Initializable {
 
             } br.close();
 
-            listausuario.print();
 
             if (listausuario.find(user,pass) == null) { //verifica usuario
                 labelError.setText("Error: No se pudo ingresar con esos datos.");
@@ -117,9 +114,17 @@ public class VistaLoginControlador implements Initializable {
 
     public void CargarEscena(String url, Event event){
         try {
+            Object eventSource = event.getSource();
+            Node sourceAsNode = (Node) eventSource ;
+            Scene oldScene = sourceAsNode.getScene();
+            Window window = oldScene.getWindow();
+            Stage stage = (Stage) window ;
+            stage.hide();
+
             root = FXMLLoader.load(getClass().getResource(url));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
 

@@ -48,14 +48,4 @@ public class UserLinkedList {
         }
         return null;
     }
-
-    public void print(){
-        Usuario current = this.head;
-        while (current != null){
-            System.out.println(current.getEmail());
-            System.out.println(current.getPassword());
-            System.out.println("OTRO");
-            current = current.getNext();
-        }
-    }
 }
