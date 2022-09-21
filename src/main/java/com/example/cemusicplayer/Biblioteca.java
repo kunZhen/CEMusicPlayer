@@ -6,6 +6,13 @@ public class Biblioteca {
     private Integer cantidad;
     private String fecha;
 
+    public Biblioteca() {
+        this.next = null;
+        this.nombre = " ";
+        this.cantidad = 0;
+        this.fecha = " ";
+    }
+
     public Biblioteca (String nombre, int cantidad, String fecha){
         this.next = null;
         this.nombre = nombre;
