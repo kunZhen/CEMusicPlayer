@@ -3,6 +3,7 @@ module com.example.cemusicplayer {
     requires javafx.fxml;
     requires javafx.web;
     requires com.google.gson;
+    requires javacsv;
 
 
     opens com.example.cemusicplayer to javafx.fxml;

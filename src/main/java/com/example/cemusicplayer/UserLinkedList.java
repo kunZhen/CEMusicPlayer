@@ -4,8 +4,6 @@ public class UserLinkedList {
     private Usuario head;
     private int size;
 
-
-
     public void UserLinkedList(){
         this.head = null;
         this.size = 0;
@@ -47,5 +45,20 @@ public class UserLinkedList {
             }
         }
         return null;
+    }
+
+    public Usuario displayUsuarios() {
+    Usuario current = this.head;
+
+    System.out.println(" ");
+    System.out.println("Lista de usuarios: ");
+    System.out.println("Cantidad de canciones: " + this.size);
+
+    while(current != null) {
+        System.out.println("Usuario: " + current.getNombre());
+        current = current.getNext();
+
+    } return null;
+
     }
 }
