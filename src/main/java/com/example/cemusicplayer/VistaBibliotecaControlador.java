@@ -1,10 +1,17 @@
 package com.example.cemusicplayer;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,6 +21,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -39,6 +49,10 @@ public class VistaBibliotecaControlador implements Initializable {
 
     @FXML
     private Text searchText;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
     private TextField searchTextField;
@@ -143,8 +157,10 @@ public class VistaBibliotecaControlador implements Initializable {
             bibliotecaLista.displayBiblioteca();
 
             bibliotecaTableView.getItems().removeAll(bibliotecaTableView.getSelectionModel().getSelectedItem()); //lo elimino del tableView
+
         }else if (evt.equals((openButton))){
-            //escribirCSV(bibliotecaNew);
+
+            CargarEscena("vistaPlaylist.fxml", event); //Crear nueva ventana
 
         } else {
             System.err.println("Error al anadir/eliminar ");
@@ -168,6 +184,34 @@ public class VistaBibliotecaControlador implements Initializable {
                 bibliotecaTableView.setItems(filtroBibliotecaO);
 
             }
+        }
+    }
+
+    public void CargarEscena(String url, Event event){
+        try {
+            Object eventSource = event.getSource();
+            Node sourceAsNode = (Node) eventSource ;
+            Scene oldScene = sourceAsNode.getScene();
+            Window window = oldScene.getWindow();
+            Stage stage = (Stage) window ;
+            stage.hide();
+
+            root = FXMLLoader.load(getClass().getResource(url));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Platform.exit();
+                }
+            });
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

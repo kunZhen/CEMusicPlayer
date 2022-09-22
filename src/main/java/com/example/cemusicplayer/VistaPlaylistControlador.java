@@ -36,9 +36,6 @@ public class VistaPlaylistControlador implements Initializable {
     private Button garbageButton;
 
     @FXML
-    private ImageView garbageImage;
-
-    @FXML
     private Label labelArtist;
 
     @FXML
@@ -60,13 +57,19 @@ public class VistaPlaylistControlador implements Initializable {
     private Button playSelectedButton;
 
     @FXML
-    private ImageView previousButton;
-
-    @FXML
     private ProgressBar progressBar;
 
     @FXML
+    private Button regresarButton;
+
+    @FXML
+    private ImageView regresarImage;
+
+    @FXML
     private ListView<?> songsListView;
+
+    @FXML
+    private ImageView trashImage;
 
     @FXML
     private Button uploadButton;
