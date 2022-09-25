@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
@@ -55,6 +52,9 @@ public class VistaBibliotecaControlador implements Initializable {
     private Parent root;
 
     @FXML
+    private Label labelNombre;
+
+    @FXML
     private TextField searchTextField;
     private java.time.format.DateTimeFormatter DateTimeFormatter;
 
@@ -63,6 +63,7 @@ public class VistaBibliotecaControlador implements Initializable {
 
     //Crear la lista de las bibliotecas
     BibliotecaDoubleEndedLinkedList bibliotecaLista = new BibliotecaDoubleEndedLinkedList();
+    private String nombreUsuario;
 
 
 
@@ -86,39 +87,50 @@ public class VistaBibliotecaControlador implements Initializable {
 
             bibliotecaTableView.setItems(bibliotecaObservableList);
 
-
         } catch (Exception e) {
             System.err.println("Error al abrir la biblioteca");
         }
     }
-
+    public void recibir (String nombreUsuario){
+        this.nombreUsuario = nombreUsuario;
+    }
     private void escribirCSV(Biblioteca newBiblioteca) throws FileNotFoundException { // creditos para escritura de csv https://www.youtube.com/watch?v=J6oXEXVNNwo&feature=share&si=ELPmzJkDCLju2KnD5oyZMQ
-        String salidaArchivo = "src/main/resources/Usuarios/csalazar/Bibliotecas/infoBibliotecas.csv";
+        String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoBibliotecas.csv";
         boolean existe = new File (salidaArchivo).exists();
 
+        System.out.println("Nombre usuario: " + nombreUsuario);
+        /*
         if (existe){ //Elimina el archivo en caso de que exista previamente
             File archivoBiblioteca = new File(salidaArchivo);
             archivoBiblioteca.delete();
-        }
-        try{
-            CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ','); //Crea el archivo
+        }*/
 
-            //Datos para identificar las columnas
+        try{
+            CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ';'); //Crea el archivo
+
+            /*//Datos para identificar las columnas
             salidaCSV.write("Nombre");
             salidaCSV.write("cantidad de canciones");
-            salidaCSV.write("fecha de creación");
+            salidaCSV.write("fecha de creación");*/
 
-            salidaCSV.endRecord(); //deja de escribir
+            //salidaCSV.endRecord(); //deja de escribir
 
-            for (Biblioteca nB : bibliotecaObservableList ){
-                salidaCSV.write(nB.getNombre());
-                salidaCSV.write("0");
-                salidaCSV.write(nB.getFecha());
+            for (Biblioteca nB : bibliotecaObservableList ) {
 
-                salidaCSV.endRecord();
+                if (bibliotecaLista.find(nB.getNombre()) != null) {
+                    if (bibliotecaLista.find(nB.getNombre()).equals(nB.getNombre())) {
+                        System.out.println("La biblioteca " + nB.getNombre() + "se encuentra en la lista");
+                    }
+                } else {
+                    salidaCSV.write(nB.getNombre());
+                    salidaCSV.write("0");
+                    salidaCSV.write(nB.getFecha());
+
+                    salidaCSV.endRecord(); //salto de línea
+                }
+
             }
             salidaCSV.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -165,6 +177,8 @@ public class VistaBibliotecaControlador implements Initializable {
         } else {
             System.err.println("Error al anadir/eliminar ");
         }
+
+
     }
 
     private void filtrarBiblioteca (KeyEvent event){

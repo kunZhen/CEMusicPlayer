@@ -104,7 +104,7 @@ public class VistaLoginControlador implements Initializable {
             if (listausuario.find(user,pass) == null) { //verifica usuario
                 labelError.setText("Error: No se pudo ingresar con esos datos.");
             }else{
-                CargarEscena("vistaBiblioteca.fxml", event); //Crear nueva ventana
+                CargarEscena("vistaBiblioteca.fxml", event,user); //Crear nueva ventana
             }
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo");
@@ -112,7 +112,7 @@ public class VistaLoginControlador implements Initializable {
         return fichero;
     }
 
-    public void CargarEscena(String url, Event event){
+    public void CargarEscena(String url, Event event, String user){
         try {
             Object eventSource = event.getSource();
             Node sourceAsNode = (Node) eventSource ;
@@ -121,7 +121,12 @@ public class VistaLoginControlador implements Initializable {
             Stage stage = (Stage) window ;
             stage.hide();
 
-            root = FXMLLoader.load(getClass().getResource(url));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("vistaBiblioteca.fxml"));
+            root = loader.load();
+            
+            VistaBibliotecaControlador vistablioteca = loader.getController();
+            vistablioteca.recibir(user);
+            
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setResizable(false);
