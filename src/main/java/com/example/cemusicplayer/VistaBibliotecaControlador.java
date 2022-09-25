@@ -64,6 +64,7 @@ public class VistaBibliotecaControlador implements Initializable {
     //Crear la lista de las bibliotecas
     BibliotecaDoubleEndedLinkedList bibliotecaLista = new BibliotecaDoubleEndedLinkedList();
     private String nombreUsuario;
+    private String nombreBiblioteca;
 
 
 
@@ -163,7 +164,9 @@ public class VistaBibliotecaControlador implements Initializable {
 
         } else if (evt.equals(deleteButton)) {
             Biblioteca eliminar = bibliotecaTableView.getSelectionModel().getSelectedItem(); //obtener el objeto por medio del tableView
-            System.out.println(eliminar.getNombre());
+            System.out.println("eliminar" + eliminar.getNombre());
+
+            this.nombreBiblioteca = eliminar.getNombre();
 
             bibliotecaLista.deleteSelectedBiblioteca(eliminar.getNombre()); //Elimino el objeto
             bibliotecaLista.displayBiblioteca();
@@ -171,8 +174,12 @@ public class VistaBibliotecaControlador implements Initializable {
             bibliotecaTableView.getItems().removeAll(bibliotecaTableView.getSelectionModel().getSelectedItem()); //lo elimino del tableView
 
         }else if (evt.equals((openButton))){
+            Biblioteca escoger = bibliotecaTableView.getSelectionModel().getSelectedItem(); //obtener el objeto por medio del tableView
+            System.out.println("escoger " + escoger.getNombre());
 
-            CargarEscena("vistaPlaylist.fxml", event); //Crear nueva ventana
+            this.nombreBiblioteca = escoger.getNombre();
+
+            CargarEscena("vistaPlaylist.fxml", event,nombreBiblioteca); //Crear nueva ventana
 
         } else {
             System.err.println("Error al anadir/eliminar ");
@@ -201,7 +208,7 @@ public class VistaBibliotecaControlador implements Initializable {
         }
     }
 
-    public void CargarEscena(String url, Event event){
+    public void CargarEscena(String url, Event event,String nombreBiblioteca){
         try {
             Object eventSource = event.getSource();
             Node sourceAsNode = (Node) eventSource ;
@@ -209,6 +216,12 @@ public class VistaBibliotecaControlador implements Initializable {
             Window window = oldScene.getWindow();
             Stage stage = (Stage) window ;
             stage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("vistaPlaylist.fxml"));
+            root = loader.load();
+
+            VistaPlaylistControlador vistaplaylist= loader.getController();
+            vistaplaylist.conseguirNombreUsuarioBiblioteca(this.nombreUsuario,nombreBiblioteca);
 
             root = FXMLLoader.load(getClass().getResource(url));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();

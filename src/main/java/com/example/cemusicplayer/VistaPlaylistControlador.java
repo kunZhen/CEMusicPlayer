@@ -101,8 +101,18 @@ public class VistaPlaylistControlador implements Initializable {
 
     private Scene scene;
     private Parent root;
+
+    private String nombreUsuario;
+    private String nombreBibliteca;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void conseguirNombreUsuarioBiblioteca(String usuario, String biblioteca){
+        this.nombreUsuario = usuario;
+        this.nombreBibliteca = biblioteca;
 
     }
     @FXML
@@ -111,9 +121,13 @@ public class VistaPlaylistControlador implements Initializable {
 
         if (evt.equals(returnButton)) {
             CargarEscena("vistaBiblioteca.fxml", event); //Crear nueva ventana
+
         }else if (evt.equals(favoriteButton)){
             Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
             favoriteImage.setImage(myImage);
+
+            System.out.println("biblioteca " + this.nombreBibliteca);
+            System.out.println("usuario " + this.nombreUsuario);
 
         }else if (evt.equals(nextButton)){
 

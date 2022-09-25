@@ -121,7 +121,7 @@ public class VistaLoginControlador implements Initializable {
             Stage stage = (Stage) window ;
             stage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("vistaBiblioteca.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("vistaBiblioteca.fxml")); //creditos de pasar datos de un controlador a otro https://www.youtube.com/watch?v=wxhGKR3PQpo&feature=share&si=ELPmzJkDCLju2KnD5oyZMQ
             root = loader.load();
             
             VistaBibliotecaControlador vistablioteca = loader.getController();
