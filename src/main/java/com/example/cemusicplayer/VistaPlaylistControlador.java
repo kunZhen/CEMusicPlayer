@@ -17,10 +17,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -85,7 +87,7 @@ public class VistaPlaylistControlador implements Initializable {
     private ImageView returnImg;
 
     @FXML
-    private ListView<?> songsListView;
+    private ListView<String> songsListView;
 
     @FXML
     private ImageView trashImage;
@@ -105,6 +107,7 @@ public class VistaPlaylistControlador implements Initializable {
     private String nombreUsuario;
     private String nombreBibliteca;
 
+    CancionCircularDoubleLinkedList cancionLista = new CancionCircularDoubleLinkedList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -136,6 +139,21 @@ public class VistaPlaylistControlador implements Initializable {
         }else if (evt.equals(regresarButton)){
 
         } else if (evt.equals(uploadButton)){
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File("src/main/resources/Musica"));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3"));
+            File selectedCancion = fc.showOpenDialog(null);
+
+            if (selectedCancion != null){
+                songsListView.getItems().add(selectedCancion.getName()); //Buscar una nueva cancion
+
+                Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath());
+                cancionLista.addToCircularDoubleLinkedList(cancion);
+
+                cancionLista.display();
+            }else{
+                System.out.println("La cancion no es valida");
+            }
 
         }else if (evt.equals(garbageButton)){
 

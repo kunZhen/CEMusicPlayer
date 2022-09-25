@@ -142,10 +142,8 @@ public class VistaBibliotecaControlador implements Initializable {
     @FXML
     private void eventAction(ActionEvent event) throws FileNotFoundException {
         Object evt = event.getSource();
-        System.out.println("entra al action event");
 
         if (evt.equals(addButton)) {
-            System.out.println("Entra al AddButton");
 
             LocalDate fechaActual = LocalDate.now(); //fecha
             System.out.println(fechaActual);
@@ -159,8 +157,6 @@ public class VistaBibliotecaControlador implements Initializable {
 
             bibliotecaLista.insertLastBiblioteca(bibliotecaNew); //agregar a la lista las bibliotecas
             bibliotecaLista.displayBiblioteca();
-
-            Biblioteca b = new Biblioteca(addBibliotecaTextField.getText(), 0, fechaActual.toString());
 
         } else if (evt.equals(deleteButton)) {
             Biblioteca eliminar = bibliotecaTableView.getSelectionModel().getSelectedItem(); //obtener el objeto por medio del tableView
@@ -223,7 +219,7 @@ public class VistaBibliotecaControlador implements Initializable {
             VistaPlaylistControlador vistaplaylist= loader.getController();
             vistaplaylist.conseguirNombreUsuarioBiblioteca(this.nombreUsuario,nombreBiblioteca);
 
-            root = FXMLLoader.load(getClass().getResource(url));
+
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setResizable(false);
