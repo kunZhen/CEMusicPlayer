@@ -1,4 +1,5 @@
 package com.example.cemusicplayer;
+
 public class Cancion {
     private Cancion next;
     private Cancion prev;
@@ -13,8 +14,6 @@ public class Cancion {
         this.path = null;
     }
     public Cancion(String nombre, boolean favorite, String path) {
-        this.next = next;
-        this.prev = prev;
         this.nombre = nombre;
         this.favorite = favorite;
         this.path = path;
