@@ -125,7 +125,7 @@ public class VistaPlaylistControlador implements Initializable {
 
     }
     @FXML
-    private void eventAction(ActionEvent event) {
+    public void eventAction(ActionEvent event) {
         Object evt = event.getSource();
 
         if (evt.equals(returnButton)) {
@@ -142,7 +142,7 @@ public class VistaPlaylistControlador implements Initializable {
 
         }else if (evt.equals(playButton)){
             selectedSong = songsListView.getSelectionModel().getSelectedItem();
-            media = new Media (CancionCircularDoubleLinkedList.find(selectedSong).toURI().toString());//agrega la cancion al Media
+            //media = new Media (CancionCircularDoubleLinkedList.find(selectedSong).toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
 
         }else if (evt.equals(regresarButton)){

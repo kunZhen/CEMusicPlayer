@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="601.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaPlaylistControlador">
+<AnchorPane prefHeight="601.0" prefWidth="410.0" style="-fx-background-color: #362ca2;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cemusicplayer.VistaPlaylistControlador">
    <children>
-      <Button fx:id="playButton" layoutX="174.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0">
+      <Button fx:id="playButton" layoutX="174.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="playImage" fitHeight="74.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -21,7 +21,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="nextButton" layoutX="253.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0">
+      <Button fx:id="nextButton" layoutX="253.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="nextImage" fitHeight="63.0" fitWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,7 +30,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="regresarButton" layoutX="96.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0">
+      <Button fx:id="regresarButton" layoutX="96.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="regresarImage" fitHeight="50.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,13 +41,13 @@
       </Button>
       <Slider fx:id="volumSlider" layoutX="27.0" layoutY="57.0" prefHeight="14.0" prefWidth="362.0" />
       <ProgressBar fx:id="progressBar" layoutY="478.0" prefHeight="18.0" prefWidth="413.0" progress="0.0" />
-      <Label fx:id="bibliotecaLabel" layoutX="14.0" layoutY="14.0" text="Biblioteca">
+      <Label fx:id="bibliotecaLabel" layoutX="14.0" layoutY="14.0" text="Biblioteca" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="songsListView" layoutX="27.0" layoutY="101.0" prefHeight="275.0" prefWidth="362.0" />
-      <Button fx:id="favoriteButton" layoutX="333.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0">
+      <ListView fx:id="songsListView" layoutX="27.0" layoutY="101.0" prefHeight="275.0" prefWidth="362.0" style="-fx-background-color: #E6DEEC;" />
+      <Button fx:id="favoriteButton" layoutX="333.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="favoriteImage" fitHeight="49.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -56,15 +56,15 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="labelSong" layoutX="26.0" layoutY="390.0" text="Cancion">
+      <Label fx:id="labelSong" layoutX="26.0" layoutY="390.0" style="-fx-alignment: white;" text="Cancion" textFill="#d7d7d7">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="labelArtist" layoutX="26.0" layoutY="417.0" text="Artista" />
-      <Button fx:id="editButton" layoutX="319.0" layoutY="405.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Editar" />
-      <Button fx:id="playSelectedButton" layoutX="319.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Reproducir" />
-      <Button fx:id="uploadButton" layoutX="201.0" layoutY="405.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="49.0" prefWidth="54.0">
+      <Label fx:id="labelArtist" layoutX="26.0" layoutY="417.0" text="Artista" textFill="#cdcdcd" />
+      <Button fx:id="editButton" layoutX="319.0" layoutY="405.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #901567;" text="Editar" textFill="WHITE" />
+      <Button fx:id="playSelectedButton" layoutX="319.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #901567;" text="Reproducir" textFill="WHITE" />
+      <Button fx:id="uploadButton" layoutX="199.0" layoutY="404.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="49.0" prefWidth="54.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="uploadImage" fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -73,7 +73,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="garbageButton" layoutX="258.0" layoutY="404.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="47.0" prefWidth="57.0">
+      <Button fx:id="garbageButton" layoutX="258.0" layoutY="404.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="47.0" prefWidth="57.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="trashImage" fitHeight="41.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -82,7 +82,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="cycleButton" layoutX="14.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0">
+      <Button fx:id="cycleButton" layoutX="14.0" layoutY="516.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="60.0" prefWidth="66.0" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="cycleImage" fitHeight="46.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -91,7 +91,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="returnButton" layoutX="350.0" layoutY="7.0" mnemonicParsing="false" onAction="#eventAction">
+      <Button fx:id="returnButton" layoutX="350.0" layoutY="7.0" mnemonicParsing="false" onAction="#eventAction" style="-fx-background-color: #901567;">
          <graphic>
             <ImageView fx:id="returnImg" fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
