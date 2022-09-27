@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 public class VistaPlaylistControlador implements Initializable {
 
     @FXML
@@ -106,6 +108,10 @@ public class VistaPlaylistControlador implements Initializable {
 
     private String nombreUsuario;
     private String nombreBibliteca;
+    private Media media;
+    private MediaPlayer mediaPlayer;
+
+    private String selectedSong;
 
     CancionCircularDoubleLinkedList cancionLista = new CancionCircularDoubleLinkedList();
     @Override
@@ -135,6 +141,9 @@ public class VistaPlaylistControlador implements Initializable {
         }else if (evt.equals(nextButton)){
 
         }else if (evt.equals(playButton)){
+            selectedSong = songsListView.getSelectionModel().getSelectedItem();
+            media = new Media (CancionCircularDoubleLinkedList.find(selectedSong).toURI().toString());//agrega la cancion al Media
+            mediaPlayer = new MediaPlayer(media);
 
         }else if (evt.equals(regresarButton)){
 
@@ -145,10 +154,10 @@ public class VistaPlaylistControlador implements Initializable {
             File selectedCancion = fc.showOpenDialog(null);
 
             if (selectedCancion != null){
-                songsListView.getItems().add(selectedCancion.getName()); //Buscar una nueva cancion
-
                 Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath());
                 cancionLista.addToCircularDoubleLinkedList(cancion);
+
+                songsListView.getItems().add(selectedCancion.getName()); //agregar una nueva cancion
 
                 cancionLista.display();
             }else{

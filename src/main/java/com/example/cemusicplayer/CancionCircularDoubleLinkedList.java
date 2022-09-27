@@ -125,6 +125,17 @@ public class CancionCircularDoubleLinkedList {
         }
     }
 
+    public Cancion find (String nombre){
+        Cancion current = this.head;
+        while (current != null){
+            if (current.getNombre().equals(nombre)){
+                return current;
+            }else{
+                current = current.getNext();
+            }
+        }
+        return null;
+    }
 
     public Cancion getHead() {
         return head;

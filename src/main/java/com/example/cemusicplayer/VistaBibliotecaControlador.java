@@ -162,7 +162,7 @@ public class VistaBibliotecaControlador implements Initializable {
             Biblioteca eliminar = bibliotecaTableView.getSelectionModel().getSelectedItem(); //obtener el objeto por medio del tableView
             System.out.println("eliminar" + eliminar.getNombre());
 
-            this.nombreBiblioteca = eliminar.getNombre();
+            //this.nombreBiblioteca = eliminar.getNombre();
 
             bibliotecaLista.deleteSelectedBiblioteca(eliminar.getNombre()); //Elimino el objeto
             bibliotecaLista.displayBiblioteca();
