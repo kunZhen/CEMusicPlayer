@@ -95,26 +95,15 @@ public class VistaBibliotecaControlador implements Initializable {
     public void recibir (String nombreUsuario){
         this.nombreUsuario = nombreUsuario;
     }
+
     private void escribirCSV(Biblioteca newBiblioteca) throws FileNotFoundException { // creditos para escritura de csv https://www.youtube.com/watch?v=J6oXEXVNNwo&feature=share&si=ELPmzJkDCLju2KnD5oyZMQ
         String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoBibliotecas.csv";
         boolean existe = new File (salidaArchivo).exists();
 
         System.out.println("Nombre usuario: " + nombreUsuario);
-        /*
-        if (existe){ //Elimina el archivo en caso de que exista previamente
-            File archivoBiblioteca = new File(salidaArchivo);
-            archivoBiblioteca.delete();
-        }*/
 
         try{
             CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ';'); //Crea el archivo
-
-            /*//Datos para identificar las columnas
-            salidaCSV.write("Nombre");
-            salidaCSV.write("cantidad de canciones");
-            salidaCSV.write("fecha de creación");*/
-
-            //salidaCSV.endRecord(); //deja de escribir
 
             for (Biblioteca nB : bibliotecaObservableList ) {
 
@@ -180,8 +169,6 @@ public class VistaBibliotecaControlador implements Initializable {
         } else {
             System.err.println("Error al anadir/eliminar ");
         }
-
-
     }
 
     private void filtrarBiblioteca (KeyEvent event){

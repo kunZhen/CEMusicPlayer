@@ -1,9 +1,12 @@
 package com.example.cemusicplayer;
 
+import java.io.File;
+
 public class Cancion {
     private Cancion next;
     private Cancion prev;
     private String nombre;
+    private File selected;
     private boolean favorite;
     private String path;
     public Cancion() {
@@ -13,10 +16,11 @@ public class Cancion {
         this.favorite = false; //ninguna cancion es favorita al comienzo
         this.path = null;
     }
-    public Cancion(String nombre, boolean favorite, String path) {
+    public Cancion(String nombre, boolean favorite, String path, File selected) {
         this.nombre = nombre;
         this.favorite = favorite;
         this.path = path;
+        this.selected = selected;
     }
 
     public Cancion getNext() {
@@ -57,5 +61,12 @@ public class Cancion {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public File getFile() {
+        return selected;
+    }
+    public void setFile(File selected) {
+        this.selected = selected;
     }
 }

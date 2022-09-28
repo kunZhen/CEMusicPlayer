@@ -112,6 +112,8 @@ public class VistaPlaylistControlador implements Initializable {
     private MediaPlayer mediaPlayer;
 
     private String selectedSong;
+    private File selectedCancion;
+    private String reproducirSong;
 
     CancionCircularDoubleLinkedList cancionLista = new CancionCircularDoubleLinkedList();
     @Override
@@ -129,7 +131,7 @@ public class VistaPlaylistControlador implements Initializable {
         Object evt = event.getSource();
 
         if (evt.equals(returnButton)) {
-            CargarEscena("vistaBiblioteca.fxml", event); //Crear nueva ventana
+            CargarEscena("vistaBiblioteca.fxml", event); //volver a biblioteca
 
         }else if (evt.equals(favoriteButton)){
             Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
@@ -139,13 +141,38 @@ public class VistaPlaylistControlador implements Initializable {
             System.out.println("usuario " + this.nombreUsuario);
 
         }else if (evt.equals(nextButton)){
+            mediaPlayer.stop();
 
-        }else if (evt.equals(playButton)){
-            selectedSong = songsListView.getSelectionModel().getSelectedItem();
-            //media = new Media (CancionCircularDoubleLinkedList.find(selectedSong).toURI().toString());//agrega la cancion al Media
+            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
+            reproducirSong = (reproducir.getNext().getNombre());
+
+            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
 
+            mediaPlayer.play();
+
+
+        }else if (evt.equals(playButton)){
+            mediaPlayer.stop();
+            selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
+            reproducirSong = selectedSong;
+
+            Cancion reproducir = cancionLista.find(selectedSong); //busca la cancion en la lista
+            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
+            mediaPlayer = new MediaPlayer(media);
+
+            mediaPlayer.play();
+
         }else if (evt.equals(regresarButton)){
+            mediaPlayer.stop();
+
+            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
+            reproducirSong = (reproducir.getPrev().getNombre());
+
+            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
+            mediaPlayer = new MediaPlayer(media);
+
+            mediaPlayer.play();
 
         } else if (evt.equals(uploadButton)){
             FileChooser fc = new FileChooser();
@@ -154,17 +181,21 @@ public class VistaPlaylistControlador implements Initializable {
             File selectedCancion = fc.showOpenDialog(null);
 
             if (selectedCancion != null){
-                Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath());
+                Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath(),selectedCancion); //nueva cancion
                 cancionLista.addToCircularDoubleLinkedList(cancion);
 
-                songsListView.getItems().add(selectedCancion.getName()); //agregar una nueva cancion
+                songsListView.getItems().add(cancion.getNombre()); //agregar una nueva cancion al listview
 
                 cancionLista.display();
+
+                media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
+                mediaPlayer = new MediaPlayer(media);
             }else{
                 System.out.println("La cancion no es valida");
             }
 
         }else if (evt.equals(garbageButton)){
+
 
         }else if (evt.equals(cycleButton)){
 
