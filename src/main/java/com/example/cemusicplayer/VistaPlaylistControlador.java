@@ -1,6 +1,8 @@
 package com.example.cemusicplayer;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -26,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -108,22 +112,33 @@ public class VistaPlaylistControlador implements Initializable {
 
     private String nombreUsuario;
     private String nombreBibliteca;
+
     private Media media;
     private MediaPlayer mediaPlayer;
-
     private String selectedSong;
     private File selectedCancion;
     private String reproducirSong;
 
+    private Timer timer;
+    private TimerTask task;
+    private boolean running;
+
     CancionCircularDoubleLinkedList cancionLista = new CancionCircularDoubleLinkedList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        volumSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                mediaPlayer.setVolume(volumSlider.getValue()*0.01);
+            }
+        });
     }
 
     public void conseguirNombreUsuarioBiblioteca(String usuario, String biblioteca){
         this.nombreUsuario = usuario;
         this.nombreBibliteca = biblioteca;
+
+        bibliotecaLabel.setText(this.nombreBibliteca);
 
     }
     @FXML
@@ -142,6 +157,8 @@ public class VistaPlaylistControlador implements Initializable {
 
         }else if (evt.equals(nextButton)){
             mediaPlayer.stop();
+            progressBar.setProgress(0);
+            beginTimer();
 
             Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
             reproducirSong = (reproducir.getNext().getNombre());
@@ -154,6 +171,8 @@ public class VistaPlaylistControlador implements Initializable {
 
         }else if (evt.equals(playButton)){
             mediaPlayer.stop();
+            beginTimer();
+
             selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
             reproducirSong = selectedSong;
 
@@ -205,7 +224,25 @@ public class VistaPlaylistControlador implements Initializable {
 
         }
     }
-
+    public void beginTimer(){
+        timer = new Timer();
+        task = new TimerTask(){
+            public void run(){
+                running = true;
+                double currentTimer =  mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+                progressBar.setProgress(currentTimer/end);
+                if (currentTimer/end == 1){
+                    cancelTimer();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000 );
+    }
+    public void cancelTimer(){
+        running = false;
+        timer.cancel();
+    }
     public void CargarEscena(String url, Event event){
         try {
             Object eventSource = event.getSource();
