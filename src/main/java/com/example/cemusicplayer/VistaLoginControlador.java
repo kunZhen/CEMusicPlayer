@@ -56,7 +56,7 @@ public class VistaLoginControlador implements Initializable {
             }
         }
 
-        System.out.println("eventkey"); //cada vez que se teclea muestra este print
+        System.out.println("Se ha tecleado"); //cada vez que se teclea muestra este print
     }
     @FXML
     private void eventAction(ActionEvent event){
@@ -83,12 +83,12 @@ public class VistaLoginControlador implements Initializable {
     public String cargarArchivo(String user, String pass, ActionEvent event){ //objetos de usuario, verificacion de usuario
 
         String fichero = "";
-        System.out.println("entra a cargar archivo");
+        System.out.println("Carga el archivo de infousuarios.csv");
         String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuarios.csv";
         UserLinkedList listausuario = new UserLinkedList();
 
         try {
-            System.out.println("entra al try");
+            System.out.println("Entra al try a crear los usuarios en la lista");
             BufferedReader br = new BufferedReader(new FileReader(ruta));
             br.readLine(); //saltar la primera linea - los encabezados
             String linea = br.readLine();

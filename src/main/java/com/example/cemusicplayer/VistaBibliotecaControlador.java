@@ -36,6 +36,9 @@ public class VistaBibliotecaControlador implements Initializable {
     private Button addButton;
 
     @FXML
+    private Button refrescarButton;
+
+    @FXML
     private TableView<Biblioteca> bibliotecaTableView;
 
     @FXML
@@ -56,6 +59,7 @@ public class VistaBibliotecaControlador implements Initializable {
 
     @FXML
     private TextField searchTextField;
+
     private java.time.format.DateTimeFormatter DateTimeFormatter;
 
     private ObservableList<Biblioteca> bibliotecaObservableList;
@@ -65,7 +69,7 @@ public class VistaBibliotecaControlador implements Initializable {
     BibliotecaDoubleEndedLinkedList bibliotecaLista = new BibliotecaDoubleEndedLinkedList();
     private String nombreUsuario;
     private String nombreBiblioteca;
-
+    private boolean presionar = true;
 
 
     @Override
@@ -88,12 +92,62 @@ public class VistaBibliotecaControlador implements Initializable {
 
             bibliotecaTableView.setItems(bibliotecaObservableList);
 
+
         } catch (Exception e) {
             System.err.println("Error al abrir la biblioteca");
         }
     }
     public void recibir (String nombreUsuario){
         this.nombreUsuario = nombreUsuario;
+    }
+
+    @FXML
+    void mostrar (ActionEvent event) {
+        System.out.println("Entre al mostrar ");
+        String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoBibliotecas.csv";
+
+        if (presionar) { //si puedo presionar, entonces muestre
+            presionar = false;
+            BufferedReader reader = null;
+            String line = "";
+
+            bibliotecaObservableList = FXCollections.observableArrayList();
+
+            try{
+                reader = new BufferedReader(new FileReader(salidaArchivo));
+                reader.readLine();
+
+                while ((line = reader.readLine()) != null) {
+                    String[] row = line.split(";");
+
+                    Biblioteca newBiblioteca = new Biblioteca(row[0], Integer.parseInt(row[1]), row[2]);
+                    bibliotecaObservableList.add(newBiblioteca);
+                    bibliotecaTableView.getItems().add(newBiblioteca);
+                    bibliotecaLista.insertLastBiblioteca(newBiblioteca); //agregar a la lista las bibliotecas
+                    bibliotecaLista.displayBiblioteca();
+
+                    // Imprime cada biblioteca creada
+                    for (String index : row) {
+                        System.out.printf("%-20s", index);
+
+                    }
+
+                    System.out.println();
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    reader.close();
+                    System.out.println("Cierro el archivo csv de bibliotecas de: " + nombreUsuario);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            System.out.println("Ya se habia mostrado las bibliotecas");
+        }
+
     }
 
     private void escribirCSV(Biblioteca newBiblioteca) throws FileNotFoundException { // creditos para escritura de csv https://www.youtube.com/watch?v=J6oXEXVNNwo&feature=share&si=ELPmzJkDCLju2KnD5oyZMQ
@@ -103,23 +157,48 @@ public class VistaBibliotecaControlador implements Initializable {
         System.out.println("Nombre usuario: " + nombreUsuario);
 
         try{
+            System.out.println("Entra al try de escribirCSV");
             CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ';'); //Crea el archivo
 
-            for (Biblioteca nB : bibliotecaObservableList ) {
+            int largo = 0;
 
+            for (Biblioteca nB : bibliotecaObservableList) {
                 if (bibliotecaLista.find(nB.getNombre()) != null) {
-                    if (bibliotecaLista.find(nB.getNombre()).equals(nB.getNombre())) {
-                        System.out.println("La biblioteca " + nB.getNombre() + "se encuentra en la lista");
-                    }
-                } else {
-                    salidaCSV.write(nB.getNombre());
-                    salidaCSV.write("0");
-                    salidaCSV.write(nB.getFecha());
-
-                    salidaCSV.endRecord(); //salto de línea
+                    largo++;
                 }
-
             }
+
+            System.out.println("bibliotecaObservableList largo: " + largo);
+
+            if (largo == 0) { //si no hay elementos en la lista, lo agrega de una vez
+                salidaCSV.write(newBiblioteca.getNombre());
+                salidaCSV.write("0");
+                salidaCSV.write(newBiblioteca.getFecha());
+                System.out.println("Se agrego la biblioteca al CSV");
+
+                salidaCSV.endRecord(); //salto de línea
+            } else {
+                for (Biblioteca nB : bibliotecaObservableList) {
+                    System.out.println("Entra al try de escribirCSV --> entra al for");
+
+                    if (bibliotecaLista.find(nB.getNombre()) != null) {
+                        System.out.println("Entra al try de escribirCSV --> entra al for --> encuentro el nombre");
+                        if (bibliotecaLista.find(nB.getNombre()).equals(newBiblioteca.getNombre())) {
+                            System.out.println("La biblioteca " + nB.getNombre() + "se encuentra en la lista");
+                        } else {
+                            System.out.println("Entra al try de escribirCSV --> entra al for --> entra al else para escribir el CSV");
+                            salidaCSV.write(newBiblioteca.getNombre());
+                            salidaCSV.write("0");
+                            salidaCSV.write(newBiblioteca.getFecha());
+                            System.out.println("Se agrego la biblioteca al CSV");
+
+                            salidaCSV.endRecord(); //salto de línea
+                            break;
+                        }
+                    }
+                }
+            }
+
             salidaCSV.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -135,26 +214,27 @@ public class VistaBibliotecaControlador implements Initializable {
         if (evt.equals(addButton)) {
 
             LocalDate fechaActual = LocalDate.now(); //fecha
-            System.out.println(fechaActual);
-            System.out.println("Fecha actual " + fechaActual);
+            System.out.println("Fecha actual: " + fechaActual);
 
             Biblioteca bibliotecaNew = new Biblioteca(addBibliotecaTextField.getText(), 0, fechaActual.toString());
             bibliotecaTableView.getItems().add(bibliotecaNew);
             addBibliotecaTextField.clear();
 
-            escribirCSV(bibliotecaNew);
+            escribirCSV(bibliotecaNew); //agrega al archivo CSV la nueva biblioteca
 
             bibliotecaLista.insertLastBiblioteca(bibliotecaNew); //agregar a la lista las bibliotecas
             bibliotecaLista.displayBiblioteca();
 
+
         } else if (evt.equals(deleteButton)) {
             Biblioteca eliminar = bibliotecaTableView.getSelectionModel().getSelectedItem(); //obtener el objeto por medio del tableView
-            System.out.println("eliminar" + eliminar.getNombre());
+            System.out.println("Se elimina: " + eliminar.getNombre());
 
             //this.nombreBiblioteca = eliminar.getNombre();
 
             bibliotecaLista.deleteSelectedBiblioteca(eliminar.getNombre()); //Elimino el objeto
-            bibliotecaLista.displayBiblioteca();
+            System.out.println("Se ha eliminado la biblioteca: " + eliminar.getNombre());
+            bibliotecaLista.displayBiblioteca(); //Muestro la biblioteca
 
             bibliotecaTableView.getItems().removeAll(bibliotecaTableView.getSelectionModel().getSelectedItem()); //lo elimino del tableView
 

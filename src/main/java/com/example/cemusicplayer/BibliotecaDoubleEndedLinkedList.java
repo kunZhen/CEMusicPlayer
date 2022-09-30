@@ -119,10 +119,11 @@ public class BibliotecaDoubleEndedLinkedList {
 
         System.out.println(" ");
         System.out.println("Lista de Bibliotecas");
-        System.out.println("Cantidad de Bibliotecas " + this.size);
+        System.out.println("HEAD: " + this.head.getNombre() + "     TAIL: " + this.tail.getNombre());
+        System.out.println("Cantidad de Bibliotecas: " + this.size);
 
         while (current != null) {
-            System.out.println("Bibloteca: " + current.getNombre() + "  Cantidad de canciones: " + current.getCantidad());
+            System.out.println("Bibloteca: " + current.getNombre() + "      Fecha: " + current.getFecha() + "      Cantidad de canciones: " + current.getCantidad());
             current = current.getNext();
         }
         return null;

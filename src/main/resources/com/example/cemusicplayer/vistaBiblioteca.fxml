@@ -15,5 +15,6 @@
         <Button fx:id="addButton" layoutX="308.0" layoutY="533.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #901567;" text="Añadir" textFill="WHITE" />
         <Text fx:id="searchText" fill="WHITE" layoutX="15.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar:" />
         <TextField fx:id="searchTextField" layoutX="14.0" layoutY="49.0" style="-fx-background-color: #E6DEEC;" />
+      <Button fx:id="refrescarButton" layoutX="298.0" layoutY="49.0" mnemonicParsing="false" onAction="#mostrar" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #901567;" text="Refrescar" textFill="WHITE" />
     </children>
 </AnchorPane>
