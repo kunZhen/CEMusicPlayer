@@ -188,17 +188,18 @@ public class VistaPlaylistControlador implements Initializable {
 
         }else if (evt.equals(nextButton)){
             mediaPlayer.stop();
-            progressBar.setProgress(0);
+            progressBar.setProgress(0); //progressBar en cero
             beginTimer();
 
-            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
-            reproducirSong = (reproducir.getNext().getNombre());
+            System.out.println(reproducirSong);
 
-            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
+            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
+            reproducirSong = reproducir.getNext().getNombre(); //consigue el nombre de la siguiente cancion
+
+            media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
 
             mediaPlayer.play();
-
 
         }else if (evt.equals(playButton)){
             mediaPlayer.stop();
@@ -217,9 +218,9 @@ public class VistaPlaylistControlador implements Initializable {
             mediaPlayer.stop();
 
             Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
-            reproducirSong = (reproducir.getPrev().getNombre());
+            reproducirSong = reproducir.getPrev().getNombre(); //consigue el nombre de la cancion anterior
 
-            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
+            media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
 
             mediaPlayer.play();
@@ -228,7 +229,7 @@ public class VistaPlaylistControlador implements Initializable {
 
             FileChooser fc = new FileChooser();
             fc.setInitialDirectory(new File("src/main/resources/Musica"));
-            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3"));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3")); //solamente puede escoger .mp3
             File selectedCancion = fc.showOpenDialog(null);
 
             if (selectedCancion != null){
@@ -238,9 +239,13 @@ public class VistaPlaylistControlador implements Initializable {
                 songsListView.getItems().add(cancion.getNombre()); //agregar una nueva cancion al listview
 
                 cancionLista.display();
-
+                cancionLista.displayPrevNext();
+                if (media != null){
+                    mediaPlayer.stop();
+                }
                 media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
-                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer =  new MediaPlayer(media);
+
                 /*
                 try {
                     escribirCSV(cancion);
@@ -248,7 +253,7 @@ public class VistaPlaylistControlador implements Initializable {
                     throw new RuntimeException(e);
                 } */
 
-                mediaPlayer.stop();
+
 
             }else{
                 System.out.println("La cancion no es valida");

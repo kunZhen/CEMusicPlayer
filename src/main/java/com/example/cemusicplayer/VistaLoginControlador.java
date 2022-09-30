@@ -84,7 +84,7 @@ public class VistaLoginControlador implements Initializable {
 
         String fichero = "";
         System.out.println("entra a cargar archivo");
-        String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuariosPrueba.csv";
+        String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuarios.csv";
         UserLinkedList listausuario = new UserLinkedList();
 
         try {
