@@ -1,5 +1,6 @@
 package com.example.cemusicplayer;
 
+import com.csvreader.CsvWriter;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,6 +26,8 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -141,6 +144,34 @@ public class VistaPlaylistControlador implements Initializable {
         bibliotecaLabel.setText(this.nombreBibliteca);
 
     }
+    /*
+    private void escribirCSV(Cancion newCancion) throws FileNotFoundException {
+        String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoCanciones.csv";
+        boolean existe = new File (salidaArchivo).exists();
+
+        try{
+            CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ';'); //Crea el archivo
+
+            for (Cancion nB : cancionLista) {
+
+                if (cancionLista.find(nB.getNombre()) != null) {
+                    if (cancionLista.find(nB.getNombre()).equals(nB.getNombre())) {
+                        System.out.println("La cancion " + nB.getNombre() + "se encuentra en la lista");
+                    }
+                } else {
+                    salidaCSV.write(nB.getNombre());
+                    salidaCSV.write(nB.getPath());
+                    //salidaCSV.write(nB.getFile());
+
+                    salidaCSV.endRecord(); //salto de línea
+                }
+            }
+            salidaCSV.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
     @FXML
     public void eventAction(ActionEvent event) {
         Object evt = event.getSource();
@@ -194,6 +225,7 @@ public class VistaPlaylistControlador implements Initializable {
             mediaPlayer.play();
 
         } else if (evt.equals(uploadButton)){
+
             FileChooser fc = new FileChooser();
             fc.setInitialDirectory(new File("src/main/resources/Musica"));
             fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3"));
@@ -209,11 +241,26 @@ public class VistaPlaylistControlador implements Initializable {
 
                 media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
                 mediaPlayer = new MediaPlayer(media);
+                /*
+                try {
+                    escribirCSV(cancion);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } */
+
+                mediaPlayer.stop();
+
             }else{
                 System.out.println("La cancion no es valida");
             }
 
         }else if (evt.equals(garbageButton)){
+            mediaPlayer.stop();
+            String eliminar = songsListView.getSelectionModel().getSelectedItem();
+
+            cancionLista.delete(eliminar);
+
+            songsListView.getItems().removeAll(songsListView.getSelectionModel().getSelectedItem());
 
 
         }else if (evt.equals(cycleButton)){
@@ -243,6 +290,7 @@ public class VistaPlaylistControlador implements Initializable {
         running = false;
         timer.cancel();
     }
+
     public void CargarEscena(String url, Event event){
         try {
             Object eventSource = event.getSource();
