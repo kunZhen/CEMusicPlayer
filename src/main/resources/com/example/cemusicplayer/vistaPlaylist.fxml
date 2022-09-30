@@ -61,7 +61,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="labelArtist" layoutX="26.0" layoutY="417.0" text="Artista" textFill="#cdcdcd" />
       <Button fx:id="editButton" layoutX="319.0" layoutY="405.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #901567;" text="Editar" textFill="WHITE" />
       <Button fx:id="playSelectedButton" layoutX="319.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #901567;" text="Reproducir" textFill="WHITE" />
       <Button fx:id="uploadButton" layoutX="199.0" layoutY="404.0" mnemonicParsing="false" onAction="#eventAction" prefHeight="49.0" prefWidth="54.0" style="-fx-background-color: #901567;">
