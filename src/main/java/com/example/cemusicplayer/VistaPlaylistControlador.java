@@ -149,12 +149,18 @@ public class VistaPlaylistControlador implements Initializable {
     public void eventAction(ActionEvent event) {
         Object evt = event.getSource();
 
-        if (evt.equals(favoriteButton)){
-            Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
-            favoriteImage.setImage(myImage);
+        if (evt.equals(favoriteButton)){ //cambia el boton y el true o false dentro de la clase
 
-            System.out.println("biblioteca " + this.nombreBibliteca);
-            System.out.println("usuario " + this.nombreUsuario);
+            if (cancionLista.find(reproducirSong).isFavorite()){
+                cancionLista.find(reproducirSong).setFavorite(false);
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
+            else{
+                cancionLista.find(reproducirSong).setFavorite(true);
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
 
         }else if (evt.equals(nextButton)){
             mediaPlayer.stop();
@@ -169,12 +175,20 @@ public class VistaPlaylistControlador implements Initializable {
             media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
 
+            if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
+            else{
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
+
             mediaPlayer.play();
 
         }else if (evt.equals(playButton)){
 
-
-            selectedSong = songsListView.getSelectionModel().getSelectedItem(); //obtiene la cancion del listView
+            selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
 
             if (selectedSong != null) {
                 mediaPlayer.stop();
@@ -182,13 +196,22 @@ public class VistaPlaylistControlador implements Initializable {
                 reproducirSong = selectedSong;
 
                 Cancion reproducir = cancionLista.find(selectedSong); //busca la cancion en la lista
-                labelSong.setText(reproducir.getNombre());
                 media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
                 mediaPlayer = new MediaPlayer(media);
+                System.out.println("favorito" + cancionLista.find(selectedSong).isFavorite());
+
+                if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
+                    Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+                    favoriteImage.setImage(myImage);
+                }
+                else{
+                    Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+                    favoriteImage.setImage(myImage);
+                }
 
                 mediaPlayer.play();
-            }
 
+            }
 
         }else if (evt.equals(regresarButton)){
             mediaPlayer.stop();
@@ -198,6 +221,15 @@ public class VistaPlaylistControlador implements Initializable {
 
             media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
             mediaPlayer = new MediaPlayer(media);
+
+            if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
+            else{
+                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+                favoriteImage.setImage(myImage);
+            }
 
             mediaPlayer.play();
 
@@ -221,6 +253,14 @@ public class VistaPlaylistControlador implements Initializable {
                 }
                 media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
                 mediaPlayer =  new MediaPlayer(media);
+
+                /*
+                try {
+                    escribirCSV(cancion);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } */
+
 
 
             }else{
