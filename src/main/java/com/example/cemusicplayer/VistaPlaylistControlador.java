@@ -203,9 +203,11 @@ public class VistaPlaylistControlador implements Initializable {
                 reproducirSong = selectedSong;
 
                 Cancion reproducir = cancionLista.find(selectedSong); //busca la cancion en la lista
+                labelSong.setText(reproducir.getNombre());
                 media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
                 mediaPlayer = new MediaPlayer(media);
                 System.out.println("favorito" + cancionLista.find(selectedSong).isFavorite());
+
 
                 if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
                     Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));

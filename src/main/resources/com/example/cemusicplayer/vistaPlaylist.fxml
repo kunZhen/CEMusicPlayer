@@ -90,6 +90,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="controllador" layoutX="326.0" layoutY="19.0" mnemonicParsing="false" onAction="#bebesong" style="-fx-background-color: #901567;" text="Controlador" textFill="WHITE" />
+      <Button fx:id="controllador" layoutX="326.0" layoutY="19.0" mnemonicParsing="false" onAction="#llamarArduino" style="-fx-background-color: #901567;" text="Controlador" textFill="WHITE" />
    </children>
 </AnchorPane>
