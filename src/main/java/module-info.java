@@ -5,6 +5,8 @@ module com.example.cemusicplayer {
     requires com.google.gson;
     requires javacsv;
     requires javafx.media;
+    requires com.fazecast.jSerialComm;
+    requires jssc;
 
 
     opens com.example.cemusicplayer to javafx.fxml;

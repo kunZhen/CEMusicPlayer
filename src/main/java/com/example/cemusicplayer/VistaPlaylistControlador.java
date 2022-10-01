@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -24,6 +25,11 @@ import java.util.TimerTask;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+import com.fazecast.jSerialComm.*;
+import jssc.*;
+import jssc.SerialPort;
+import jssc.SerialPortEvent;
 
 /**
  * VistaPlaylistControlador se encarga de controlar los eventos y las acciones de la
@@ -139,57 +145,47 @@ public class VistaPlaylistControlador implements Initializable {
         bibliotecaLabel.setText(this.nombreBibliteca);
 
     }
+    @FXML
+    public void favoriteButtonAction(){
+        if (cancionLista.find(reproducirSong).isFavorite()){
+            cancionLista.find(reproducirSong).setFavorite(false);
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+            favoriteImage.setImage(myImage);
+        }
+        else{
+            cancionLista.find(reproducirSong).setFavorite(true);
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+            favoriteImage.setImage(myImage);
+        }
+    }
+    @FXML
+    public void nextButtonAction() {
+        mediaPlayer.stop();
+        progressBar.setProgress(0); //progressBar en cero
+        beginTimer();
 
-    /**
-     * Permite ejecutar la acción respectiva al botón que se presionó
-     * @param event interación del usuario con el programa
-     */
+        System.out.println(reproducirSong);
+
+        Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
+        reproducirSong = reproducir.getNext().getNombre(); //consigue el nombre de la siguiente cancion
+
+        media = new Media(cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
+        mediaPlayer = new MediaPlayer(media);
+
+        if (cancionLista.find(reproducirSong).isFavorite()) { //muestra si es favorito o no
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+            favoriteImage.setImage(myImage);
+        } else {
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+            favoriteImage.setImage(myImage);
+        }
+
+        mediaPlayer.play();
+    }
 
     @FXML
-    public void eventAction(ActionEvent event) {
-        Object evt = event.getSource();
-
-        if (evt.equals(favoriteButton)){ //cambia el boton y el true o false dentro de la clase
-
-            if (cancionLista.find(reproducirSong).isFavorite()){
-                cancionLista.find(reproducirSong).setFavorite(false);
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-            else{
-                cancionLista.find(reproducirSong).setFavorite(true);
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-
-        }else if (evt.equals(nextButton)){
-            mediaPlayer.stop();
-            progressBar.setProgress(0); //progressBar en cero
-            beginTimer();
-
-            System.out.println(reproducirSong);
-
-            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
-            reproducirSong = reproducir.getNext().getNombre(); //consigue el nombre de la siguiente cancion
-
-            media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
-            mediaPlayer = new MediaPlayer(media);
-
-            if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-            else{
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-
-            mediaPlayer.play();
-
-        }else if (evt.equals(playButton)){
-
-            selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
-
+    public void playButtonAction(){
+        selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
             if (selectedSong != null) {
                 mediaPlayer.stop();
                 beginTimer();
@@ -213,77 +209,81 @@ public class VistaPlaylistControlador implements Initializable {
 
             }
 
-        }else if (evt.equals(regresarButton)){
-            mediaPlayer.stop();
+        }
+    @FXML
+    public void regresarButtonAction(){
+        mediaPlayer.stop();
 
-            Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
-            reproducirSong = reproducir.getPrev().getNombre(); //consigue el nombre de la cancion anterior
+        Cancion reproducir = cancionLista.find(reproducirSong); //busca la cancion en la lista
+        reproducirSong = reproducir.getPrev().getNombre(); //consigue el nombre de la cancion anterior
 
-            media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
-            mediaPlayer = new MediaPlayer(media);
+        media = new Media (cancionLista.find(reproducirSong).getFile().toURI().toString());//agrega la cancion al Media
+        mediaPlayer = new MediaPlayer(media);
 
-            if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-            else{
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
+        if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+            favoriteImage.setImage(myImage);
+        }
+        else{
+            Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+            favoriteImage.setImage(myImage);
+        }
 
-            mediaPlayer.play();
-
-        } else if (evt.equals(uploadButton)){
-
-            FileChooser fc = new FileChooser();
-            fc.setInitialDirectory(new File("src/main/resources/Musica"));
-            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3")); //solamente puede escoger .mp3
-            File selectedCancion = fc.showOpenDialog(null);
-
-            if (selectedCancion != null){
-                Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath(),selectedCancion); //nueva cancion
-                cancionLista.addToCircularDoubleLinkedList(cancion);
-
-                songsListView.getItems().add(cancion.getNombre()); //agregar una nueva cancion al listview
-
-                cancionLista.display();
-                cancionLista.displayPrevNext();
-                if (media != null){
-                    mediaPlayer.stop();
-                }
-                media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
-                mediaPlayer =  new MediaPlayer(media);
-
-                /*
-                try {
-                    escribirCSV(cancion);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                } */
-
-
-
-            }else{
-                System.out.println("La cancion no es valida");
-            }
-
-        }else if (evt.equals(garbageButton)){
-            mediaPlayer.stop();
-            String eliminar = songsListView.getSelectionModel().getSelectedItem();
-
-            cancionLista.delete(eliminar);
-
-            songsListView.getItems().removeAll(songsListView.getSelectionModel().getSelectedItem());
-
-
-        }else if (evt.equals(cycleButton)){
-
-        }else if (evt.equals(editButton)){
-
-        }else if (evt.equals(playSelectedButton)){
+        mediaPlayer.play();
 
         }
+    @FXML
+    public void UploadButtonAction(){
+
+        FileChooser fc = new FileChooser();
+        fc.setInitialDirectory(new File("src/main/resources/Musica"));
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3","*.mp3")); //solamente puede escoger .mp3
+        File selectedCancion = fc.showOpenDialog(null);
+
+        if (selectedCancion != null){
+            Cancion cancion = new Cancion (selectedCancion.getName(), false, selectedCancion.getAbsolutePath(),selectedCancion); //nueva cancion
+            cancionLista.addToCircularDoubleLinkedList(cancion);
+
+            songsListView.getItems().add(cancion.getNombre()); //agregar una nueva cancion al listview
+
+            cancionLista.display();
+            cancionLista.displayPrevNext();
+            if (media != null){
+                mediaPlayer.stop();
+            }
+            media = new Media (cancion.getFile().toURI().toString());//agrega la cancion al Media
+            mediaPlayer =  new MediaPlayer(media);
+
+        }else{
+            System.out.println("La cancion no es valida");
+        }
+
     }
+
+    @FXML
+    public void GarbageButtonAction() {
+        mediaPlayer.stop();
+        String eliminar = songsListView.getSelectionModel().getSelectedItem();
+
+        cancionLista.delete(eliminar);
+
+        songsListView.getItems().removeAll(songsListView.getSelectionModel().getSelectedItem());
+
+    }
+
+    @FXML
+    public void cycleButtonAction(){
+
+
+        }
+    @FXML
+    public void editButtonAction(){
+
+        }
+    @FXML
+    public void playSelectedButtonAction(){
+
+        }
 
     /**
      * Rellena la progress bar conforme se ejecuta la canción
@@ -311,5 +311,45 @@ public class VistaPlaylistControlador implements Initializable {
         running = false;
         timer.cancel();
     }
-
+    public void bebesong(){
+        //arduino();
+    }
+    public void arduino(){
+        System.out.println("arduino");
+        SerialPort puerto = new SerialPort("COM4");
+        try {
+            puerto.openPort();
+            puerto.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            puerto.addEventListener((SerialPortEvent event) -> {
+                if (event.isRXCHAR()){
+                    try {
+                        String x = puerto.readString();
+                        System.out.println(x + " x");
+                        if (x.equals("p")){
+                            System.out.println("entra a p");
+                            playButtonAction();
+                        }
+                        if (x.equals("f")) {
+                            favoriteButtonAction();
+                        }
+                        if (x.equals("r")){
+                            regresarButtonAction();
+                        }
+                        if (x.equals("n")){
+                            nextButtonAction();
+                        }
+                        if (x.equals("c")){
+                            cycleButtonAction();
+                        }
+                    }
+                    catch (SerialPortException e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        catch (SerialPortException e){
+            e.printStackTrace();
+        }
+    }
 }
