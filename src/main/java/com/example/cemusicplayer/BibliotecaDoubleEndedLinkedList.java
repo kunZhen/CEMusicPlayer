@@ -1,58 +1,44 @@
 package com.example.cemusicplayer;
 
+/**
+ * BibliotecaDoubleEndedList es una clase que permite enlazar los Nodos Biblioteca que
+ * se van creando, es decir, forma la lista de las bibliotecas. Presenta un head, tail y size.
+ */
 public class BibliotecaDoubleEndedLinkedList {
 
     private Biblioteca head;
     private Biblioteca tail;
     private int size;
 
+    /**
+     * Constructor. Inicializar los atributos de la lista.
+     */
     public void BibliotecaDoubleEndedLinkedList(){
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
 
+    /**
+     * Indica si la lista se encuentra vacia
+     * @return true o false
+     */
     public boolean isEmpty(){
         return this.head == null;
     }
 
+    /**
+     * Indica el tamaño que presenta la lista
+     * @return el tamaño de la lista
+     */
     public int size() {
         return this.size;
     }
 
-    public void insertFirst(String nombre, int cantidad, String fecha){
-        Biblioteca nuevo = new Biblioteca(nombre,cantidad,fecha);
-
-        if (isEmpty()) { //Si la lista esta vacia
-            this.head = this.tail = nuevo;
-        } else {
-            nuevo.setNext(this.head);
-            this.head = nuevo;
-        } this.size++;
-
-    }
-
-    public void insertFirstBiblioteca(Biblioteca bibliotecaNew) {
-        if (isEmpty()) { //Si la lista esta vacia
-            this.head = this.tail = bibliotecaNew;
-        } else{
-            bibliotecaNew.setNext(this.head);
-            this.head = bibliotecaNew;
-        } this.size++;
-    }
-
-
-    public void insertLast(String nombre, int cantidad, String fecha) {
-        Biblioteca nuevo = new Biblioteca(nombre, cantidad, fecha);
-
-        if (isEmpty()) {
-            this.head = this.tail = nuevo;
-        } else{
-            tail.setNext(nuevo);
-            this.tail = nuevo;
-        } this.size++;
-    }
-
+    /**
+     * Inserta el objeto biblioteca al final de la lista
+     * @param bibliotecaNew - biblioteca
+     */
     public void insertLastBiblioteca(Biblioteca bibliotecaNew) {
 
         if (isEmpty()) {
@@ -63,17 +49,11 @@ public class BibliotecaDoubleEndedLinkedList {
         } this.size++;
     }
 
-    public Biblioteca deleteFirst(){
-        if (this.head != null){
-            Biblioteca temp = this.head;
-            this.head = this.head.getNext();
-            this.size--;
-            return temp;
-        }else{
-            return null;
-        }
-    }
-
+    /**
+     * Busca la biblioteca dentro de la lista
+     * @param nombre - nombre de la biblioteca
+     * @return null o la biblioteca que se está buscando
+     */
     public Biblioteca find (String nombre){
         Biblioteca current = this.head;
         while (current != null){
@@ -86,6 +66,11 @@ public class BibliotecaDoubleEndedLinkedList {
         return null;
     }
 
+    /**
+     * Elimina la biblioteca seleccionada
+     * @param nombre - nomrbe de la biblioteca
+     * @return null o la biblioteca que se eliminó
+     */
     public Biblioteca deleteSelectedBiblioteca (String nombre){
         Biblioteca current = this.head;
         Biblioteca previous = this.head;
@@ -114,6 +99,10 @@ public class BibliotecaDoubleEndedLinkedList {
         return null;
     }
 
+    /**
+     * Muestra las bibliotecas que cuenta la lista en la consola
+     * @return null
+     */
     public Biblioteca displayBiblioteca() {
         Biblioteca current = this.head;
 

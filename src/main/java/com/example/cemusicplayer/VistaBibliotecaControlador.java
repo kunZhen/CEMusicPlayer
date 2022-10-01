@@ -28,6 +28,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * VistaBibliotecaControlador se encarga de controlar los eventos y las acciones de la
+ * ventana de bibliotecas del usuario.
+ */
 public class VistaBibliotecaControlador implements Initializable {
     @FXML
     private TextField addBibliotecaTextField;
@@ -47,8 +51,6 @@ public class VistaBibliotecaControlador implements Initializable {
     @FXML
     private Button openButton;
 
-    @FXML
-    private Text searchText;
 
     private Stage stage;
     private Scene scene;
@@ -57,8 +59,6 @@ public class VistaBibliotecaControlador implements Initializable {
     @FXML
     private Label labelNombre;
 
-    @FXML
-    private TextField searchTextField;
 
     private java.time.format.DateTimeFormatter DateTimeFormatter;
 
@@ -72,6 +72,11 @@ public class VistaBibliotecaControlador implements Initializable {
     private boolean presionar = true;
 
 
+    /**
+     * Inicializa el programa
+     * @param url - hace referencia a la ubicación de la interfaz gráfica (el archivo fxml)
+     * @param resourceBundle - para traducir textos o modificar otra información dependiente de la configuración regional
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try { //columnas para el tableView
@@ -97,10 +102,19 @@ public class VistaBibliotecaControlador implements Initializable {
             System.err.println("Error al abrir la biblioteca");
         }
     }
+
+    /**
+     * Actualiza el nombre del usuario
+     * @param nombreUsuario nombre del usuario
+     */
     public void recibir (String nombreUsuario){
         this.nombreUsuario = nombreUsuario;
     }
 
+    /**
+     * Muestra en la tabla
+     * @param event - interación del usuario con el programa por medio de clicks del mouse
+     */
     @FXML
     void mostrar (ActionEvent event) {
         System.out.println("Entre al mostrar ");
@@ -150,6 +164,12 @@ public class VistaBibliotecaControlador implements Initializable {
 
     }
 
+    /**
+     * Escribe en el archivo CSV para agregar las bibliotecas
+     * @param newBiblioteca biblioteca nueva
+     * @throws FileNotFoundException excepción que se produce cuando la dirección del archivo
+     * no existe o no es accesible
+     */
     private void escribirCSV(Biblioteca newBiblioteca) throws FileNotFoundException { // creditos para escritura de csv https://www.youtube.com/watch?v=J6oXEXVNNwo&feature=share&si=ELPmzJkDCLju2KnD5oyZMQ
         String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoBibliotecas.csv";
         boolean existe = new File (salidaArchivo).exists();
@@ -207,6 +227,13 @@ public class VistaBibliotecaControlador implements Initializable {
 
 
     //conseguir las bibliotecas
+
+    /**
+     * Permite ejecutar la acción respectiva al botón que se presionó
+     * @param event interación del usuario con el programa por medio de clicks del mouse
+     * @throws FileNotFoundException excepción que se produce cuando la dirección del archivo
+     * no existe o no es accesible
+     */
     @FXML
     private void eventAction(ActionEvent event) throws FileNotFoundException {
         Object evt = event.getSource();
@@ -251,26 +278,13 @@ public class VistaBibliotecaControlador implements Initializable {
         }
     }
 
-    private void filtrarBiblioteca (KeyEvent event){
 
-        String filtroNombre = searchTextField.getText();
-
-        if (filtroNombre.isEmpty()){
-            this.bibliotecaTableView.setItems(bibliotecaObservableList);
-        }else{
-            filtroBibliotecaO.clear();
-
-            for (Biblioteca b: bibliotecaObservableList){
-
-                if(b.getNombre().toLowerCase().contains(filtroNombre.toLowerCase())){
-                    filtroBibliotecaO.add(b);
-                }
-                bibliotecaTableView.setItems(filtroBibliotecaO);
-
-            }
-        }
-    }
-
+    /**
+     *
+     * @param url - hace referencia a la ubicación de la interfaz gráfica (el archivo fxml)
+     * @param event interación del usuario con el programa por medio de clicks del mouse
+     * @param nombreBiblioteca nombre de la biblioteca
+     */
     public void CargarEscena(String url, Event event,String nombreBiblioteca){
         try {
             Object eventSource = event.getSource();
