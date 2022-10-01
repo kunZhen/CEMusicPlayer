@@ -145,6 +145,10 @@ public class VistaPlaylistControlador implements Initializable {
         bibliotecaLabel.setText(this.nombreBibliteca);
 
     }
+
+    /**
+     * Coloca el favorito en las canciones
+     */
     @FXML
     public void favoriteButtonAction(){
         if (cancionLista.find(reproducirSong).isFavorite()){
@@ -158,6 +162,10 @@ public class VistaPlaylistControlador implements Initializable {
             favoriteImage.setImage(myImage);
         }
     }
+
+    /**
+     * Pasa a la siguiente canción
+     */
     @FXML
     public void nextButtonAction() {
         mediaPlayer.stop();
@@ -183,6 +191,9 @@ public class VistaPlaylistControlador implements Initializable {
         mediaPlayer.play();
     }
 
+    /**
+     * Reproduce la canción
+     */
     @FXML
     public void playButtonAction(){
         selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
@@ -210,7 +221,11 @@ public class VistaPlaylistControlador implements Initializable {
             }
 
         }
-    @FXML
+
+    /**
+     * Reproduce la canción anterior
+     */
+        @FXML
     public void regresarButtonAction(){
         mediaPlayer.stop();
 
@@ -232,7 +247,11 @@ public class VistaPlaylistControlador implements Initializable {
         mediaPlayer.play();
 
         }
-    @FXML
+
+    /**
+     * Permite subir canciones
+     */
+        @FXML
     public void UploadButtonAction(){
 
         FileChooser fc = new FileChooser();
@@ -260,6 +279,9 @@ public class VistaPlaylistControlador implements Initializable {
 
     }
 
+    /**
+     * Permite eliminar canciones
+     */
     @FXML
     public void GarbageButtonAction() {
         mediaPlayer.stop();
@@ -271,19 +293,12 @@ public class VistaPlaylistControlador implements Initializable {
 
     }
 
+
     @FXML
     public void cycleButtonAction(){
 
-
         }
-    @FXML
-    public void editButtonAction(){
 
-        }
-    @FXML
-    public void playSelectedButtonAction(){
-
-        }
 
     /**
      * Rellena la progress bar conforme se ejecuta la canción
@@ -311,9 +326,17 @@ public class VistaPlaylistControlador implements Initializable {
         running = false;
         timer.cancel();
     }
-    public void bebesong(){
+
+    /**
+     * Inicializa el arduino
+     */
+    public void llamarArduino(){
         //arduino();
     }
+
+    /**
+     * Permite la comuniación con arduino
+     */
     public void arduino(){
         System.out.println("arduino");
         SerialPort puerto = new SerialPort("COM4");
