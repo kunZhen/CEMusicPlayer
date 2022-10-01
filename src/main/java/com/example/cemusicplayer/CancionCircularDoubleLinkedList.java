@@ -1,29 +1,42 @@
 package com.example.cemusicplayer;
 
+/**
+ * Clase que permite enlazar las canciones de manera doble, es decir, forma una lista doblemente enlazada circular
+ * de canciones. Presenta el head, tail y size
+ */
 public class CancionCircularDoubleLinkedList {
     private Cancion head;
     private Cancion tail;
     private int size;
+
+    /**
+     * Constructor. Inicializa los atributos de la lista
+     */
     public CancionCircularDoubleLinkedList() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
 
-    public CancionCircularDoubleLinkedList(Cancion head, Cancion tail, int size) {
-        this.head = head;
-        this.tail = tail;
-        this.size = size;
-    }
-
+    /**
+     * Indica si la lista se encuentra vacia
+     * @return true o false
+     */
     public boolean isEmpty(){
         return this.head == null;
     }
 
+    /**
+     * Indica el tamaño de la lista
+     * @return tamaño de lista
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+     * Muestra la información de cada canción en la consola
+     */
     public void display() {
         Cancion current = this.head;
         if (isEmpty()) {
@@ -41,6 +54,10 @@ public class CancionCircularDoubleLinkedList {
         }
     }
 
+    /**
+     * Muestra las canciones de la lista; cada una con su
+     * respectiva canción siguiente o anterior.
+     */
     public void displayPrevNext() {
         Cancion current = this.head;
 
@@ -60,6 +77,10 @@ public class CancionCircularDoubleLinkedList {
         }
     }
 
+    /**
+     * Añade la canción a la lista
+     * @param cancion - canción
+     */
     public void addToCircularDoubleLinkedList(Cancion cancion) {
         if (head == null) { //si la lista es vacia, el head y tail son los mismos
             this.head = cancion;
@@ -77,6 +98,10 @@ public class CancionCircularDoubleLinkedList {
         this.size++;
     }
 
+    /**
+     * Elimina la canción de la lista
+     * @param nombre - nombre de la canción
+     */
     public void delete(String nombre) {
         Cancion current = this.head;
         Cancion prev = this.head;
@@ -125,6 +150,11 @@ public class CancionCircularDoubleLinkedList {
         }
     }
 
+    /**
+     * Busca si la canción se encuentra en la lista
+     * @param nombre - nombre de la canción
+     * @return null o la canción encontrada
+     */
     public Cancion find (String nombre){
         Cancion current = this.head;
         while (current != null){
@@ -137,10 +167,18 @@ public class CancionCircularDoubleLinkedList {
         return null;
     }
 
+    /**
+     * Consigue la primera canción de la lista
+     * @return primera canción
+     */
     public Cancion getHead() {
         return head;
     }
 
+    /**
+     * Consigue la última canción de la lista
+     * @return última canción
+     */
     public Cancion getTail() {
         return tail;
     }

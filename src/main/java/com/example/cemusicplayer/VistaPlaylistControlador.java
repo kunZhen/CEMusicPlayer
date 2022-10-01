@@ -1,16 +1,10 @@
 package com.example.cemusicplayer;
 
-import com.csvreader.CsvWriter;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,14 +15,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -36,6 +24,11 @@ import java.util.TimerTask;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+/**
+ * VistaPlaylistControlador se encarga de controlar los eventos y las acciones de la
+ * ventana del reproductor de canciones
+ */
 public class VistaPlaylistControlador implements Initializable {
 
     @FXML
@@ -58,9 +51,6 @@ public class VistaPlaylistControlador implements Initializable {
 
     @FXML
     private Button garbageButton;
-
-    @FXML
-    private Label labelArtist;
 
     @FXML
     private Label labelSong;
@@ -90,12 +80,6 @@ public class VistaPlaylistControlador implements Initializable {
     private ImageView regresarImage;
 
     @FXML
-    private Button returnButton;
-
-    @FXML
-    private ImageView returnImg;
-
-    @FXML
     private ListView<String> songsListView;
 
     @FXML
@@ -119,7 +103,7 @@ public class VistaPlaylistControlador implements Initializable {
     private Media media;
     private MediaPlayer mediaPlayer;
     private String selectedSong;
-    private String currentCancion;
+    private File selectedCancion;
     private String reproducirSong;
 
     private Timer timer;
@@ -127,6 +111,12 @@ public class VistaPlaylistControlador implements Initializable {
     private boolean running;
 
     CancionCircularDoubleLinkedList cancionLista = new CancionCircularDoubleLinkedList();
+
+    /**
+     * Inicializa el slider del volumen
+     * @param url - hace referencia a la ubicación de la interfaz gráfica (el archivo fxml)
+     * @param resourceBundle - para traducir textos o modificar otra información dependiente de la configuración regional
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         volumSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -137,6 +127,11 @@ public class VistaPlaylistControlador implements Initializable {
         });
     }
 
+    /**
+     * Recibe el nombre de usuario y biblioteca de la clase VistaBibliotecaControlador
+     * @param usuario usuario
+     * @param biblioteca biblioteca
+     */
     public void conseguirNombreUsuarioBiblioteca(String usuario, String biblioteca){
         this.nombreUsuario = usuario;
         this.nombreBibliteca = biblioteca;
@@ -144,42 +139,17 @@ public class VistaPlaylistControlador implements Initializable {
         bibliotecaLabel.setText(this.nombreBibliteca);
 
     }
-    /*
-    private void escribirCSV(Cancion newCancion) throws FileNotFoundException {
-        String salidaArchivo = "src/main/resources/Usuarios/" + this.nombreUsuario + "/Bibliotecas/infoCanciones.csv";
-        boolean existe = new File (salidaArchivo).exists();
 
-        try{
-            CsvWriter salidaCSV =  new CsvWriter(new FileWriter(salidaArchivo, true), ';'); //Crea el archivo
-
-            for (Cancion nB : cancionLista) {
-
-                if (cancionLista.find(nB.getNombre()) != null) {
-                    if (cancionLista.find(nB.getNombre()).equals(nB.getNombre())) {
-                        System.out.println("La cancion " + nB.getNombre() + "se encuentra en la lista");
-                    }
-                } else {
-                    salidaCSV.write(nB.getNombre());
-                    salidaCSV.write(nB.getPath());
-                    //salidaCSV.write(nB.getFile());
-
-                    salidaCSV.endRecord(); //salto de línea
-                }
-            }
-            salidaCSV.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
+    /**
+     * Permite ejecutar la acción respectiva al botón que se presionó
+     * @param event interación del usuario con el programa
+     */
 
     @FXML
     public void eventAction(ActionEvent event) {
         Object evt = event.getSource();
 
-        if (evt.equals(returnButton)) {
-            CargarEscena("vistaBiblioteca.fxml", event); //volver a biblioteca
-
-        }else if (evt.equals(favoriteButton)){ //cambia el boton y el true o false dentro de la clase
+        if (evt.equals(favoriteButton)){ //cambia el boton y el true o false dentro de la clase
 
             if (cancionLista.find(reproducirSong).isFavorite()){
                 cancionLista.find(reproducirSong).setFavorite(false);
@@ -217,27 +187,31 @@ public class VistaPlaylistControlador implements Initializable {
             mediaPlayer.play();
 
         }else if (evt.equals(playButton)){
-            mediaPlayer.stop();
-            beginTimer();
 
             selectedSong = songsListView.getSelectionModel().getSelectedItem();//obtiene la cancion del listView
-            reproducirSong = selectedSong;
 
-            Cancion reproducir = cancionLista.find(selectedSong); //busca la cancion en la lista
-            media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
-            mediaPlayer = new MediaPlayer(media);
-            System.out.println("favorito" + cancionLista.find(selectedSong).isFavorite());
+            if (selectedSong != null) {
+                mediaPlayer.stop();
+                beginTimer();
+                reproducirSong = selectedSong;
 
-            if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
-                favoriteImage.setImage(myImage);
+                Cancion reproducir = cancionLista.find(selectedSong); //busca la cancion en la lista
+                media = new Media (reproducir.getFile().toURI().toString());//agrega la cancion al Media
+                mediaPlayer = new MediaPlayer(media);
+                System.out.println("favorito" + cancionLista.find(selectedSong).isFavorite());
+
+                if (cancionLista.find(reproducirSong).isFavorite()){ //muestra si es favorito o no
+                    Image myImage = new Image(getClass().getResourceAsStream("Icons/heartIMG.png"));
+                    favoriteImage.setImage(myImage);
+                }
+                else{
+                    Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
+                    favoriteImage.setImage(myImage);
+                }
+
+                mediaPlayer.play();
+
             }
-            else{
-                Image myImage = new Image(getClass().getResourceAsStream("Icons/corazonIMG.png"));
-                favoriteImage.setImage(myImage);
-            }
-
-            mediaPlayer.play();
 
         }else if (evt.equals(regresarButton)){
             mediaPlayer.stop();
@@ -310,6 +284,10 @@ public class VistaPlaylistControlador implements Initializable {
 
         }
     }
+
+    /**
+     * Rellena la progress bar conforme se ejecuta la canción
+     */
     public void beginTimer(){
         timer = new Timer();
         task = new TimerTask(){
@@ -325,36 +303,13 @@ public class VistaPlaylistControlador implements Initializable {
         };
         timer.scheduleAtFixedRate(task, 1000, 1000 );
     }
+
+    /**
+     * Detiene la reproducción de la progress bar
+     */
     public void cancelTimer(){
         running = false;
         timer.cancel();
     }
 
-    public void CargarEscena(String url, Event event){
-        try {
-            Object eventSource = event.getSource();
-            Node sourceAsNode = (Node) eventSource ;
-            Scene oldScene = sourceAsNode.getScene();
-            Window window = oldScene.getWindow();
-            Stage stage = (Stage) window ;
-            stage.hide();
-
-            root = FXMLLoader.load(getClass().getResource(url));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    Platform.exit();
-                }
-            });
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -8,7 +8,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Clase principal
+ */
 public class HelloApplication extends Application {
+
+    /**
+     *
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vistaLogin.fxml"));
@@ -19,7 +28,6 @@ public class HelloApplication extends Application {
         stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void main(String[] args) {

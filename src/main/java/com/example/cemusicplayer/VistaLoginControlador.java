@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ *  VistaLoginControlador se encarga de controlar los eventos y las acciones de
+ *  la ventana Login.
+ */
 public class VistaLoginControlador implements Initializable {
     @FXML
     public Label labelError;
@@ -40,6 +44,10 @@ public class VistaLoginControlador implements Initializable {
     private Scene scene;
     private Parent root;
 
+    /**
+     * Interacción del programa por medio del teclado
+     * @param event interación del usuario con el programa
+     */
     @FXML
     private void eventKey(KeyEvent event) {
         Object evt = event.getSource(); // en que nodo se posicionó el evento
@@ -56,8 +64,13 @@ public class VistaLoginControlador implements Initializable {
             }
         }
 
-        System.out.println("eventkey"); //cada vez que se teclea muestra este print
+        System.out.println("Se ha tecleado"); //cada vez que se teclea muestra este print
     }
+
+    /**
+     * Permite ejecutar la acción respectiva al botón que se presionó
+     * @param event interación del usuario con el programa
+     */
     @FXML
     private void eventAction(ActionEvent event){
         Object evt = event.getSource();
@@ -74,21 +87,33 @@ public class VistaLoginControlador implements Initializable {
         }
     }
 
+    /**
+     * Inicializa el programa
+     * @param url - hace referencia a la ubicación de la interfaz gráfica (el archivo fxml)
+     * @param resourceBundle - para traducir textos o modificar otra información dependiente de la configuración regional
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
 
+    /**
+     * Crea la lista de usuarios y valida el usuario con la contraseña
+     * @param user usuario
+     * @param pass contraseña
+     * @param event interación del usuario con el programa
+     * @return
+     */
     public String cargarArchivo(String user, String pass, ActionEvent event){ //objetos de usuario, verificacion de usuario
 
         String fichero = "";
-        System.out.println("entra a cargar archivo");
+        System.out.println("Carga el archivo de infousuarios.csv");
         String ruta = "src/main/resources/com/example/cemusicplayer/infoUsuarios.csv";
         UserLinkedList listausuario = new UserLinkedList();
 
         try {
-            System.out.println("entra al try");
+            System.out.println("Entra al try a crear los usuarios en la lista");
             BufferedReader br = new BufferedReader(new FileReader(ruta));
             br.readLine(); //saltar la primera linea - los encabezados
             String linea = br.readLine();
@@ -112,6 +137,12 @@ public class VistaLoginControlador implements Initializable {
         return fichero;
     }
 
+    /**
+     * Carga la siguiente escena --> biblioteca
+     * @param url - hace referencia a la ubicación de la interfaz gráfica (el archivo fxml)
+     * @param event interación del usuario con el programa
+     * @param user usuario
+     */
     public void CargarEscena(String url, Event event, String user){
         try {
             Object eventSource = event.getSource();
